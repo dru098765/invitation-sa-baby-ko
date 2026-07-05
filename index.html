@@ -28,7 +28,9 @@
     --display: 'Fraunces', Georgia, serif;
     --body: 'Inter', -apple-system, sans-serif;
     --nav-h: 74px;
+    --topbar-h: 58px;
   }
+  .screen-overlay.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
   *{box-sizing:border-box; margin:0; padding:0;}
   html, body{ height:100%; overscroll-behavior:none; max-width:100%; }
   html{ overflow-x:hidden; }
@@ -77,6 +79,61 @@
   /* ambient specks */
   #bg-particles{ position:absolute; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
   .particle{ position:absolute; opacity:0.14; will-change:transform; color:var(--rose-deep); }
+
+  /* ---------- INTRO SEQUENCE ---------- */
+  #intro-screen{
+    position:absolute; inset:0; z-index:95; display:flex; align-items:center; justify-content:center;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(244,220,199,0.75), transparent 55%),
+      radial-gradient(circle at 82% 80%, rgba(176,138,78,0.16), transparent 55%),
+      var(--paper);
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+    overflow:hidden;
+  }
+  .intro-slide{
+    position:absolute; inset:0; display:none; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:2.2rem 1.4rem; overflow-y:auto;
+  }
+  .intro-slide.active{ display:flex; animation: intro-fade 0.7s ease both; }
+  @keyframes intro-fade{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:translateY(0); } }
+  .intro-icons{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+  .intro-title{ font-size:clamp(2rem,7vw,3rem); color:var(--rose-deep); line-height:1.16; margin-top:0.9rem; max-width:560px; }
+  .intro-sub{ font-family:var(--display); font-style:italic; color:var(--cocoa-soft); font-size:1.05rem; margin-top:1.1rem; max-width:440px; line-height:1.6; }
+  .intro-continue{ margin-top:2.4rem; }
+
+  /* Screen 2: system scan */
+  .intro-scan-title{ font-size:clamp(1.3rem,4.5vw,1.7rem); color:var(--cocoa); margin-top:0.6rem; letter-spacing:0.02em; }
+  .scan-lines{ list-style:none; margin-top:1.8rem; display:flex; flex-direction:column; gap:0.75rem; text-align:left; }
+  .scan-lines li{
+    font-family:var(--body); font-weight:600; font-size:1rem; color:var(--cocoa-soft);
+    opacity:0; transform:translateX(-14px); transition: opacity 0.45s ease, transform 0.45s ease, color 0.3s ease;
+  }
+  .scan-lines li.show{ opacity:1; transform:translateX(0); color:var(--cocoa); }
+  .scan-lines li.show::before{ content:'✓ '; color:var(--gold-deep); font-weight:800; }
+  .scan-complete{
+    margin-top:1.6rem; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; font-size:0.82rem; color:var(--gold-text);
+    opacity:0; transition: opacity 0.6s ease;
+  }
+  .scan-complete.show{ opacity:1; }
+  #scan-continue{ opacity:0; pointer-events:none; transition: opacity 0.5s ease; }
+  #scan-continue.show{ opacity:1; pointer-events:auto; }
+
+  /* Screen 3: report card */
+  .report-card{
+    background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--apricot);
+    padding:clamp(1.6rem,5vw,2.4rem); margin-top:1.4rem; max-width:460px; text-align:left;
+  }
+  .report-row{ margin-bottom:1rem; }
+  .report-row:last-of-type{ margin-bottom:0; }
+  .report-label{ display:block; font-size:0.62rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--rose-deep); font-weight:800; margin-bottom:0.3rem; }
+  .report-value{ font-family:var(--display); font-size:1.05rem; color:var(--cocoa); }
+  .report-list{ list-style:none; margin-top:0.3rem; }
+  .report-list li{ padding:0.16rem 0; color:var(--cocoa); }
+  .report-list li::before{ content:'· '; color:var(--gold-deep); font-weight:800; }
+  .report-verdict{
+    margin-top:1.3rem; padding-top:1.1rem; border-top:1px dashed var(--apricot);
+    font-family:var(--display); font-style:italic; color:var(--rose-deep); font-size:1.05rem; text-align:center;
+  }
 
   /* ---------- ENVELOPE ---------- */
   #envelope-screen{
@@ -148,6 +205,29 @@
   }
   .enter-btn:hover{ transform:translateY(-3px) scale(1.02); }
 
+  /* ---------- MISSION PROGRESS TRACKER ---------- */
+  #progress-wrap{
+    position:absolute; top:0; left:0; right:0; z-index:55; height:var(--topbar-h);
+    background: rgba(255,249,243,0.94); backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--apricot);
+    display:flex; flex-direction:column; justify-content:center; gap:0.4rem;
+    padding: 0.6rem clamp(1.1rem,4vw,2rem) 0.5rem;
+    opacity:0; transform:translateY(-6px); pointer-events:none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  #progress-wrap.show{ opacity:1; transform:translateY(0); }
+  .progress-label{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:0.62rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--cocoa-soft); font-weight:800;
+  }
+  .progress-label span{ color:var(--rose-deep); font-weight:800; letter-spacing:0.02em; }
+  .progress-track{ width:100%; height:6px; border-radius:999px; background:var(--apricot-soft); overflow:hidden; }
+  .progress-fill{
+    height:100%; border-radius:999px; width:0%;
+    background:linear-gradient(90deg,var(--rose-deep),var(--gold));
+    transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  }
+
   /* ---------- PAGE DECK ---------- */
   #deck{
     position:absolute; inset:0; z-index:5; display:flex; height:100%; width:100%;
@@ -156,7 +236,7 @@
   .page{
     flex:0 0 100%; width:100%; height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch;
     display:flex; flex-direction:column; align-items:center;
-    padding: clamp(1.2rem,4vw,2rem) 1.1rem calc(var(--nav-h) + 1.8rem);
+    padding: calc(var(--topbar-h) + clamp(1.2rem,4vw,2rem)) 1.1rem calc(var(--nav-h) + 1.8rem);
     scrollbar-width:thin;
   }
   .page-inner{ width:100%; max-width:560px; margin:auto; }
@@ -197,6 +277,25 @@
   .u-flex-center{ display:flex; align-items:center; justify-content:center; }
 
   /* ---------- EVIDENCE: POLAROIDS (max 4, 2x2 grid, always centered) ---------- */
+  .evidence-board{ position:relative; width:100%; }
+  .evidence-strings{ position:absolute; inset:-6% ; width:112%; height:112%; left:-6%; top:-6%; pointer-events:none; z-index:0; }
+  .evidence-strings line{ stroke:var(--rose-deep); stroke-width:0.35; opacity:0.5; }
+  .evidence-strings circle{ fill:var(--gold-deep); }
+  .evidence-tag{
+    position:absolute; top:-10px; left:10px; z-index:2;
+    background:var(--rose-deep); color:var(--white); font-size:0.55rem; font-weight:800;
+    letter-spacing:0.08em; text-transform:uppercase; padding:0.2rem 0.55rem; border-radius:4px;
+    box-shadow:var(--shadow-soft); transform:rotate(-3deg);
+  }
+  .sticky-note{
+    position:relative; margin:1.8rem auto 0; max-width:230px; background:var(--apricot);
+    padding:1.1rem 1.2rem; border-radius:2px; box-shadow:var(--shadow-soft); transform:rotate(-2deg);
+    font-family:var(--display); font-style:italic; font-size:0.92rem; color:var(--cocoa); text-align:center;
+  }
+  .sticky-note::before{
+    content:''; position:absolute; top:-8px; left:50%; transform:translateX(-50%);
+    width:14px; height:14px; background:var(--gold); border-radius:50%; box-shadow:var(--shadow-soft);
+  }
   .polaroid-grid{
     display:grid;
     grid-template-columns:repeat(2, minmax(0,1fr));
@@ -205,6 +304,8 @@
     max-width:400px;
     margin:0 auto;
     justify-items:center;
+    position:relative;
+    z-index:1;
   }
   @media (max-width:380px){
     .polaroid-grid{ grid-template-columns:1fr; max-width:220px; }
@@ -226,6 +327,7 @@
     text-align:center;
     display:flex;
     flex-direction:column;
+    position:relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   .polaroid:hover{ transform:rotate(0deg) translateY(-4px) scale(1.03); box-shadow:var(--shadow); z-index:2; }
@@ -307,6 +409,15 @@
   .abilities li .tick{ color:var(--gold-deep); font-weight:800; }
   .badge{ display:inline-block; margin-top:0.3rem; background:linear-gradient(135deg,var(--gold-deep),var(--gold)); color:var(--white); font-weight:800; padding:0.28rem 0.8rem; border-radius:999px; font-size:0.74rem; }
   .badge.priority{ background:linear-gradient(135deg,var(--rose-deep),var(--rose)); }
+  #secret-badge{ cursor:pointer; transition: transform 0.18s ease; }
+  #secret-badge.badge-bump{ transform:scale(1.18); }
+
+  /* ---------- SECRET CONFIDENTIAL NOTES ---------- */
+  .secret-lock{ font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); font-weight:800; display:block; margin-bottom:0.6rem; }
+  .secret-list{ list-style:none; text-align:left; margin-top:0.9rem; display:grid; gap:0.5rem; }
+  .secret-list li{ font-family:var(--display); font-style:italic; font-size:1.02rem; color:var(--cocoa); }
+  .secret-list li::before{ content:'♡ '; color:var(--rose-deep); }
+  .secret-note{ margin-top:1.2rem; font-family:var(--display); font-style:italic; color:var(--rose-deep); font-size:1rem; line-height:1.6; }
 
   /* ---------- MESSAGE ---------- */
   .note-card{
@@ -393,6 +504,28 @@
   .confetti span{ position:absolute; top:-10%; width:8px; height:14px; opacity:0.9; animation: confetti-fall 1.8s ease-in forwards; }
   @keyframes confetti-fall{ to{ transform:translateY(420px) rotate(360deg); opacity:0; } }
 
+  /* ---------- MISSION COMPLETE CELEBRATION ---------- */
+  .celebration-screen{
+    position:absolute; inset:0; z-index:150; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:2rem 1.3rem; overflow:hidden;
+    background:
+      radial-gradient(circle at 22% 18%, rgba(244,220,199,0.85), transparent 55%),
+      radial-gradient(circle at 80% 82%, rgba(198,112,123,0.16), transparent 55%),
+      var(--paper);
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+  .celebration-screen.show{ opacity:1; visibility:visible; pointer-events:auto; }
+  .celebration-hearts, .celebration-confetti{ position:absolute; inset:0; pointer-events:none; overflow:hidden; border-radius:0; }
+  .celebration-content{ position:relative; z-index:2; max-width:480px; }
+  .celebration-title{ font-size:clamp(2.1rem,7vw,3rem); color:var(--rose-deep); margin-top:0.8rem; line-height:1.15; }
+  .celebration-sub{ font-family:var(--display); font-style:italic; color:var(--cocoa); font-size:1.05rem; margin-top:1rem; }
+  .celebration-status{
+    margin-top:1.3rem; display:inline-block; background:linear-gradient(135deg,var(--rose-deep),var(--rose));
+    color:var(--white); font-weight:700; letter-spacing:0.03em; padding:0.5rem 1.2rem; border-radius:999px; font-size:0.88rem;
+  }
+  #celebration-close{ margin-top:2rem; }
+
   /* ---------- BOTTOM NAV ---------- */
   #nav-bar{
     position:absolute; left:0; right:0; bottom:0; height:var(--nav-h); z-index:60;
@@ -431,8 +564,56 @@
 
 <div id="bg-particles" aria-hidden="true"></div>
 
+<!-- ============ INTRO SEQUENCE ============ -->
+<div id="intro-screen" class="screen-overlay">
+
+  <div class="intro-slide active" data-slide="1">
+    <div class="intro-icons" aria-hidden="true"></div>
+    <span class="eyebrow">Classified Dossier</span>
+    <h1 class="intro-title">Before We Proceed...</h1>
+    <p class="intro-sub">This file contains information that may be important to Agent Spidey Baby.</p>
+    <button class="enter-btn intro-continue" data-next="2">Continue</button>
+  </div>
+
+  <div class="intro-slide" data-slide="2">
+    <span class="eyebrow">System Scan</span>
+    <h2 class="intro-scan-title">Scanning subject...</h2>
+    <ul class="scan-lines" id="scan-lines">
+      <li>Smile detected</li>
+      <li>Kindness detected</li>
+      <li>Adorableness detected</li>
+      <li>Captain James distraction level: Critical</li>
+    </ul>
+    <div class="scan-complete" id="scan-complete">Analysis Complete</div>
+    <button class="enter-btn intro-continue" id="scan-continue" data-next="3">Continue</button>
+  </div>
+
+  <div class="intro-slide" data-slide="3">
+    <span class="eyebrow">Case File</span>
+    <h2 class="intro-scan-title">Investigation Results</h2>
+    <div class="report-card">
+      <div class="report-row">
+        <span class="report-label">Subject</span>
+        <span class="report-value">Agent Spidey Baby</span>
+      </div>
+      <div class="report-row">
+        <span class="report-label">Findings</span>
+        <ul class="report-list">
+          <li>Extremely lovable</li>
+          <li>Makes ordinary days better</li>
+          <li>Causes excessive smiling</li>
+          <li>Highly recommended for future adventures</li>
+        </ul>
+      </div>
+      <div class="report-verdict">Final Verdict: "Captain James likes this person very much."</div>
+    </div>
+    <button class="enter-btn" id="open-classified-btn">Open Classified File</button>
+  </div>
+
+</div>
+
 <!-- ============ ENVELOPE ============ -->
-<div id="envelope-screen">
+<div id="envelope-screen" class="screen-overlay">
   <div class="env-tag">a letter has arrived</div>
   <div class="envelope-wrap" id="envelope" role="button" tabindex="0" aria-label="Open the mission envelope" onclick="openEnvelope()">
     <div class="envelope-body">
@@ -455,6 +636,12 @@
   <div class="enter-cta" id="enter-cta">
     <button class="enter-btn" onclick="enterDeck()">Open Mission File</button>
   </div>
+</div>
+
+<!-- ============ MISSION PROGRESS TRACKER ============ -->
+<div id="progress-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Mission file progress">
+  <div class="progress-label">Mission File Progress <span id="progress-pct">0%</span></div>
+  <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
 </div>
 
 <!-- ============ PAGE DECK ============ -->
@@ -518,7 +705,7 @@
           <div class="dossier-field"><h4>NAME</h4><p>Spidey Baby</p></div>
           <div class="dossier-field"><h4>STATUS</h4><p>Captain James' favorite person</p></div>
           <div class="dossier-field"><h4>LAST KNOWN LOCATION</h4><p>Living rent-free inside Captain James' mind.</p></div>
-          <div class="dossier-field"><h4>THREAT LEVEL</h4><div class="badge">100%</div></div>
+          <div class="dossier-field"><h4>THREAT LEVEL</h4><div class="badge" id="secret-badge" role="button" tabindex="0" aria-label="Threat level badge">100%</div></div>
           <div class="dossier-field abilities">
             <h4>SPECIAL ABILITIES</h4>
             <ul>
@@ -539,23 +726,37 @@
     <div class="page-inner">
       <div class="file-tab">FILE 05 / 08 · EVIDENCE COLLECTED</div>
       <div class="section-head"><span class="eyebrow">Evidence Collected</span><h2>Evidence Collected</h2><div class="rule"></div></div>
-      <div class="polaroid-grid">
-        <div class="polaroid">
-          <div class="polaroid-photo"><span class="icon" aria-hidden="true">📷</span><span class="label">photo 1</span></div>
-          <div class="polaroid-cap">a favorite memory</div>
+      <div class="evidence-board">
+        <svg class="evidence-strings" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <line x1="50" y1="50" x2="21" y2="20" />
+          <line x1="50" y1="50" x2="79" y2="20" />
+          <line x1="50" y1="50" x2="21" y2="80" />
+          <line x1="50" y1="50" x2="79" y2="80" />
+          <circle cx="50" cy="50" r="1.6" />
+        </svg>
+        <div class="polaroid-grid">
+          <div class="polaroid">
+            <span class="evidence-tag">Exhibit A</span>
+            <div class="polaroid-photo"><span class="icon" aria-hidden="true">📷</span><span class="label">photo 1</span></div>
+            <div class="polaroid-cap">a favorite memory</div>
+          </div>
+          <div class="polaroid">
+            <span class="evidence-tag">Exhibit B</span>
+            <div class="polaroid-photo"><span class="icon" aria-hidden="true">📷</span><span class="label">photo 2</span></div>
+            <div class="polaroid-cap">ridiculously photogenic</div>
+          </div>
+          <div class="polaroid">
+            <span class="evidence-tag">Exhibit C</span>
+            <div class="polaroid-photo"><span class="icon" aria-hidden="true">📷</span><span class="label">photo 3</span></div>
+            <div class="polaroid-cap">reason #372</div>
+          </div>
+          <div class="polaroid">
+            <span class="evidence-tag">Exhibit D</span>
+            <div class="polaroid-photo"><span class="icon" aria-hidden="true">📷</span><span class="label">photo 4</span></div>
+            <div class="polaroid-cap">classified smile</div>
+          </div>
         </div>
-        <div class="polaroid">
-          <div class="polaroid-photo"><span class="icon" aria-hidden="true">📷</span><span class="label">photo 2</span></div>
-          <div class="polaroid-cap">ridiculously photogenic</div>
-        </div>
-        <div class="polaroid">
-          <div class="polaroid-photo"><span class="icon" aria-hidden="true">📷</span><span class="label">photo 3</span></div>
-          <div class="polaroid-cap">reason #372</div>
-        </div>
-        <div class="polaroid">
-          <div class="polaroid-photo"><span class="icon" aria-hidden="true">📷</span><span class="label">photo 4</span></div>
-          <div class="polaroid-cap">classified smile</div>
-        </div>
+        <div class="sticky-note">the evidence keeps stacking up 💛</div>
       </div>
     </div>
   </div>
@@ -620,7 +821,7 @@
           <span class="eyebrow">Final Authorization</span>
           <h2 style="margin-top:0.8rem; color:var(--cocoa); font-size:clamp(1.25rem,4.5vw,1.75rem);">agent spidey baby,<br>will you join captain james on this mission?</h2>
           <div class="final-buttons">
-            <button class="btn btn-primary" onclick="openModal('accept')">ACCEPT MISSION</button>
+            <button class="btn btn-primary" onclick="openCelebration()">ACCEPT MISSION</button>
             <button class="btn btn-secondary" onclick="openModal('anyway')">I WAS GOING TO SAY YES ANYWAY</button>
           </div>
         </div>
@@ -643,15 +844,20 @@
 </div>
 
 <!-- ============ MODALS ============ -->
-<div class="modal-overlay" id="modal-accept" role="dialog" aria-modal="true" aria-labelledby="modal-accept-title">
+<div class="modal-overlay" id="secret-overlay" role="dialog" aria-modal="true" aria-labelledby="secret-title">
   <div class="modal-box">
-    <div class="confetti" id="confetti-accept" aria-hidden="true"></div>
-    <span class="eyebrow">Mission Accepted</span>
-    <h3 id="modal-accept-title">YEHEYYYYYYYY.</h3>
-    <p>Agent Spidey Baby has officially accepted the mission.</p>
-    <p>Captain James would like to respond calmly and professionally. Unfortunately, calm is currently unavailable.</p>
-    <div class="status-line">Current status: very happy 🕸️🛡️</div>
-    <button class="modal-close" onclick="closeModal('modal-accept')">Close File</button>
+    <span class="secret-lock">🔓 Unlocked File</span>
+    <span class="eyebrow">Confidential Notes</span>
+    <h3 id="secret-title">Things Captain James Likes About Spidey Baby</h3>
+    <ul class="secret-list">
+      <li>Her smile</li>
+      <li>Her laugh</li>
+      <li>Her kindness</li>
+      <li>Her personality</li>
+      <li>The way she makes ordinary moments feel special</li>
+    </ul>
+    <div class="secret-note">some things are worth writing down twice.</div>
+    <button class="modal-close" onclick="closeModal('secret-overlay')">Close File</button>
   </div>
 </div>
 
@@ -662,6 +868,19 @@
     <p>After reviewing all available evidence, the system determined there was a 99.9% chance Agent Spidey Baby was going to say yes anyway.</p>
     <p>Mission accepted automatically. No further investigation required.</p>
     <button class="modal-close" onclick="closeModal('modal-anyway')">Close File</button>
+  </div>
+</div>
+
+<!-- ============ MISSION COMPLETE CELEBRATION ============ -->
+<div class="celebration-screen" id="celebration-screen" role="dialog" aria-modal="true" aria-labelledby="celebration-title">
+  <div class="celebration-hearts" id="celebration-hearts" aria-hidden="true"></div>
+  <div class="celebration-confetti confetti" id="celebration-confetti" aria-hidden="true"></div>
+  <div class="celebration-content">
+    <span class="eyebrow">Mission Status</span>
+    <h1 class="celebration-title" id="celebration-title">Mission Complete</h1>
+    <p class="celebration-sub">Agent Spidey Baby has officially accepted the mission.</p>
+    <div class="celebration-status">Captain James Happiness Level: <strong>MAXIMUM</strong></div>
+    <button class="btn btn-secondary" id="celebration-close">Back to File</button>
   </div>
 </div>
 
@@ -704,7 +923,43 @@ function spawnEnvParticles(){
 }
 function enterDeck(){
   document.getElementById('envelope-screen').classList.add('hidden');
+  document.getElementById('progress-wrap').classList.add('show');
   goToPage(0, true);
+}
+
+/* ================= INTRO SEQUENCE ================= */
+const introSlides = document.querySelectorAll('.intro-slide');
+function showIntroSlide(n){
+  introSlides.forEach(s=> s.classList.toggle('active', Number(s.dataset.slide) === n));
+  if(n === 2) startScanSequence();
+}
+document.querySelectorAll('.intro-continue').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const next = Number(btn.dataset.next);
+    if(next) showIntroSlide(next);
+  });
+});
+document.getElementById('open-classified-btn').addEventListener('click', ()=>{
+  document.getElementById('intro-screen').classList.add('hidden');
+});
+let scanPlayed = false;
+function startScanSequence(){
+  if(scanPlayed) return;
+  scanPlayed = true;
+  const lines = document.querySelectorAll('#scan-lines li');
+  const completeEl = document.getElementById('scan-complete');
+  const continueBtn = document.getElementById('scan-continue');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){
+    lines.forEach(l=>l.classList.add('show'));
+    completeEl.classList.add('show');
+    continueBtn.classList.add('show');
+    return;
+  }
+  lines.forEach((l,i)=>{ setTimeout(()=> l.classList.add('show'), 450 + i*550); });
+  const totalDelay = 450 + lines.length*550;
+  setTimeout(()=> completeEl.classList.add('show'), totalDelay + 250);
+  setTimeout(()=> continueBtn.classList.add('show'), totalDelay + 750);
 }
 
 /* ================= PAGE DECK NAVIGATION ================= */
@@ -714,6 +969,9 @@ const dotsWrap = document.getElementById('nav-dots');
 const navLabel = document.getElementById('nav-label');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
+const progressWrap = document.getElementById('progress-wrap');
+const progressFill = document.getElementById('progress-fill');
+const progressPct = document.getElementById('progress-pct');
 let current = 0;
 
 pages.forEach((p,i)=>{
@@ -741,6 +999,11 @@ function updateNav(){
   nextBtn.disabled = current === pages.length - 1;
   const activeDot = document.querySelectorAll('.nav-dot')[current];
   if(activeDot) activeDot.scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+
+  const pct = Math.round(((current+1) / pages.length) * 100);
+  progressFill.style.width = pct + '%';
+  progressPct.textContent = pct + '%';
+  progressWrap.setAttribute('aria-valuenow', String(pct));
 }
 function goToPage(i, instant){
   current = Math.max(0, Math.min(pages.length-1, i));
@@ -750,6 +1013,7 @@ function goToPage(i, instant){
   pages[current].scrollTop = 0;
   updateNav();
   playPageEnter(pages[current]);
+  if(pages[current].dataset.title === 'BRIEFING'){ typewriterBriefing(); }
 }
 function playPageEnter(page){
   const inner = page.querySelector('.page-inner');
@@ -761,7 +1025,9 @@ function playPageEnter(page){
 function goPage(dir){ goToPage(current + dir); }
 
 document.addEventListener('keydown', (e)=>{
-  if(document.getElementById('envelope-screen').classList.contains('hidden')){
+  const introHidden = document.getElementById('intro-screen').classList.contains('hidden');
+  const envelopeHidden = document.getElementById('envelope-screen').classList.contains('hidden');
+  if(introHidden && envelopeHidden){
     if(e.key === 'ArrowRight') goPage(1);
     if(e.key === 'ArrowLeft') goPage(-1);
   }
@@ -790,14 +1056,52 @@ window.addEventListener('resize', ()=>{
   resizeTimer = setTimeout(()=>{ goToPage(current, true); }, 120);
 });
 
-/* ================= SOFT BACKGROUND PARTICLES (pure SVG, no image cost) ================= */
-(function(){
-  const wrap = document.getElementById('bg-particles');
-  const heartSVG = `<svg width="22" height="20" viewBox="0 0 26 24" fill="none"><path d="M13 22 C4 15 1 10 1 6.5 C1 3 3.5 1 6.5 1 C9 1 11 2.5 13 5 C15 2.5 17 1 19.5 1 C22.5 1 25 3 25 6.5 C25 10 22 15 13 22Z" fill="currentColor"/></svg>`;
-  for(let i=0;i<9;i++){
+/* ================= TYPEWRITER: MISSION BRIEFING ================= */
+function typewriterBriefing(){
+  const card = document.querySelector('.briefing-card');
+  if(!card || card.dataset.typed) return;
+  card.dataset.typed = 'true';
+  const paras = Array.from(card.querySelectorAll('p:not(.status)'));
+  const statusEl = card.querySelector('p.status');
+  const originals = paras.map(p => p.textContent);
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced) return; /* leave the text exactly as authored */
+
+  paras.forEach(p => p.textContent = '');
+  if(statusEl) statusEl.style.opacity = '0';
+
+  let pIndex = 0;
+  function typeNextParagraph(){
+    if(pIndex >= paras.length){
+      if(statusEl){ statusEl.style.transition = 'opacity 0.5s ease'; statusEl.style.opacity = '1'; }
+      return;
+    }
+    const p = paras[pIndex];
+    const text = originals[pIndex];
+    let ci = 0;
+    const interval = setInterval(()=>{
+      p.textContent = text.slice(0, ci+1);
+      ci++;
+      if(ci >= text.length){
+        clearInterval(interval);
+        pIndex++;
+        setTimeout(typeNextParagraph, 240);
+      }
+    }, 15);
+  }
+  typeNextParagraph();
+}
+
+/* ================= REUSABLE FLOATING HEARTS ================= */
+const HEART_SVG = `<svg width="22" height="20" viewBox="0 0 26 24" fill="none"><path d="M13 22 C4 15 1 10 1 6.5 C1 3 3.5 1 6.5 1 C9 1 11 2.5 13 5 C15 2.5 17 1 19.5 1 C22.5 1 25 3 25 6.5 C25 10 22 15 13 22Z" fill="currentColor"/></svg>`;
+function spawnFloatingHearts(containerId, count){
+  const wrap = document.getElementById(containerId);
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  for(let i=0;i<count;i++){
     const el = document.createElement('div');
     el.className = 'particle';
-    el.innerHTML = heartSVG;
+    el.innerHTML = HEART_SVG;
     el.style.top = (Math.random()*100) + '%';
     el.style.left = (Math.random()*100) + '%';
     el.style.transform = `scale(${0.5 + Math.random()*0.8})`;
@@ -809,6 +1113,22 @@ window.addEventListener('resize', ()=>{
       { transform: el.style.transform + ' translateY(0px)' }
     ], { duration: dur*1000, iterations: Infinity, easing:'ease-in-out' });
   }
+}
+spawnFloatingHearts('bg-particles', 9);
+spawnFloatingHearts('intro-icons', 7);
+
+/* Subtle desktop-only parallax on the ambient hearts — off for touch devices and reduced motion */
+(function(){
+  const canParallax = window.matchMedia('(pointer:fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!canParallax) return;
+  const bgParticles = document.getElementById('bg-particles');
+  bgParticles.style.transition = 'transform 0.3s ease-out';
+  document.getElementById('app-frame').addEventListener('mousemove', (e)=>{
+    const rect = e.currentTarget.getBoundingClientRect();
+    const relX = (e.clientX - rect.left) / rect.width - 0.5;
+    const relY = (e.clientY - rect.top) / rect.height - 0.5;
+    bgParticles.style.transform = `translate(${relX*10}px, ${relY*10}px)`;
+  });
 })();
 
 /* ================= REWARD FLIP CARD ================= */
@@ -817,30 +1137,63 @@ document.getElementById('flip-card').addEventListener('keydown', (e)=>{
   if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flipCard(); }
 });
 
+/* ================= SECRET CONFIDENTIAL NOTES (5 taps on the threat badge) ================= */
+let secretClicks = 0;
+const secretBadge = document.getElementById('secret-badge');
+function bumpSecretBadge(){
+  secretClicks++;
+  secretBadge.classList.add('badge-bump');
+  setTimeout(()=> secretBadge.classList.remove('badge-bump'), 200);
+  if(secretClicks >= 5){
+    secretClicks = 0;
+    openOverlay('secret-overlay');
+  }
+}
+secretBadge.addEventListener('click', bumpSecretBadge);
+secretBadge.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); bumpSecretBadge(); }
+});
+
 /* ================= MODALS ================= */
 let lastFocusedEl = null;
-function openModal(which){
-  const id = 'modal-' + which;
+function openOverlay(id){
   const overlay = document.getElementById(id);
   lastFocusedEl = document.activeElement;
   overlay.classList.add('show');
-  if(which === 'accept'){ launchConfetti(); }
-  setTimeout(()=>{ overlay.querySelector('.modal-close').focus(); }, 50);
+  setTimeout(()=>{ overlay.querySelector('.modal-close')?.focus(); }, 50);
 }
+function openModal(which){ openOverlay('modal-' + which); }
 function closeModal(id){
   document.getElementById(id).classList.remove('show');
   if(lastFocusedEl){ lastFocusedEl.focus(); lastFocusedEl = null; }
 }
 document.querySelectorAll('.modal-overlay').forEach(m=>{
-  m.addEventListener('click', (e)=>{ if(e.target === m){ m.classList.remove('show'); if(lastFocusedEl){ lastFocusedEl.focus(); lastFocusedEl = null; } } });
+  m.addEventListener('click', (e)=>{ if(e.target === m) closeModal(m.id); });
 });
 document.addEventListener('keydown', (e)=>{
   if(e.key !== 'Escape') return;
-  const openOverlay = document.querySelector('.modal-overlay.show');
-  if(openOverlay) closeModal(openOverlay.id);
+  const openOverlayEl = document.querySelector('.modal-overlay.show');
+  if(openOverlayEl){ closeModal(openOverlayEl.id); return; }
+  if(document.getElementById('celebration-screen').classList.contains('show')) closeCelebration();
 });
-function launchConfetti(){
-  const wrap = document.getElementById('confetti-accept');
+
+/* ================= MISSION COMPLETE CELEBRATION ================= */
+function openCelebration(){
+  const screen = document.getElementById('celebration-screen');
+  lastFocusedEl = document.activeElement;
+  screen.classList.add('show');
+  spawnFloatingHearts('celebration-hearts', 12);
+  launchConfetti('celebration-confetti');
+  setTimeout(()=>{ document.getElementById('celebration-close').focus(); }, 60);
+}
+function closeCelebration(){
+  document.getElementById('celebration-screen').classList.remove('show');
+  if(lastFocusedEl){ lastFocusedEl.focus(); lastFocusedEl = null; }
+}
+document.getElementById('celebration-close').addEventListener('click', closeCelebration);
+
+function launchConfetti(wrapId){
+  const wrap = document.getElementById(wrapId);
   wrap.innerHTML = '';
   const colors = ['#C6707B','#B08A4E','#A85763'];
   for(let i=0;i<28;i++){
