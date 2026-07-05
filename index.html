@@ -234,7 +234,7 @@
     scrollbar-width:thin;
     justify-content: flex-start;
   }
-  .page-inner{ width:100%; max-width:560px; margin:auto; min-width:0; }
+  .page-inner{ width:100%; max-width:560px; margin:0 auto; min-width:0; }
   .page.centered{ justify-content: flex-start; }
   @keyframes page-enter{
     from{ opacity:0; transform:translateY(10px); }
@@ -707,6 +707,16 @@
   /* Generic centered-page helper used across sections */
   .page-inner > *{ margin-left:auto; margin-right:auto; }
 
+  .page[data-title="LETTER"],
+  .page[data-title="REWARD"],
+  .page[data-title="FINAL"],
+  .page[data-title="ACCEPTED"],
+  .page[data-title="LOCATION"]{
+    justify-content:flex-start;
+    align-items:stretch;
+    padding-top:0.45rem;
+    padding-bottom:calc(var(--nav-h) + 1rem);
+  }
   .page[data-title="LETTER"] .page-inner,
   .page[data-title="REWARD"] .page-inner,
   .page[data-title="FINAL"] .page-inner,
@@ -717,15 +727,39 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:0.75rem;
-    margin:auto;
-    padding-bottom:clamp(0.8rem, 3vw, 1.6rem);
+    gap:0.45rem;
+    margin:0 auto;
+    padding:0 0 clamp(0.7rem, 2.4vw, 1.15rem);
+    min-height:0;
+  }
+  .page[data-title="LETTER"] .section-head,
+  .page[data-title="REWARD"] .section-head,
+  .page[data-title="FINAL"] .section-head,
+  .page[data-title="ACCEPTED"] .section-head,
+  .page[data-title="LOCATION"] .section-head{
+    margin-bottom:0.45rem;
   }
 
   @media (max-width: 480px){
     :root{ --radius: 18px; }
     body, #app-frame{ overflow-x:hidden; }
-    .page{ padding: calc(var(--topbar-h) + 0.5rem) 0.7rem calc(var(--nav-h) + 0.8rem); }
+    .page{ padding: calc(var(--topbar-h) + 0.35rem) 0.7rem calc(var(--nav-h) + 0.8rem); }
+    .page[data-title="LETTER"],
+    .page[data-title="REWARD"],
+    .page[data-title="FINAL"],
+    .page[data-title="ACCEPTED"],
+    .page[data-title="LOCATION"]{
+      padding-top:0.2rem;
+      padding-bottom:calc(var(--nav-h) + 0.7rem);
+    }
+    .page[data-title="LETTER"] .page-inner,
+    .page[data-title="REWARD"] .page-inner,
+    .page[data-title="FINAL"] .page-inner,
+    .page[data-title="ACCEPTED"] .page-inner,
+    .page[data-title="LOCATION"] .page-inner{
+      gap:0.3rem;
+      padding-bottom:0.65rem;
+    }
     .page-inner{ max-width:100%; }
     .page-inner > *{ max-width:100%; }
     .section-head{ margin-bottom:0.9rem; }
@@ -1498,6 +1532,7 @@ function playAcceptedEffects(){
 
 function launchConfetti(wrapId){
   const wrap = document.getElementById(wrapId);
+  if(!wrap) return;
   wrap.innerHTML = '';
   const colors = ['#C6707B','#B08A4E','#A85763'];
   for(let i=0;i<28;i++){
