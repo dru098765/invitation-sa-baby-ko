@@ -713,7 +713,8 @@
   .page[data-title="FINAL"],
   .page[data-title="ACCEPTED"],
   .page[data-title="LOCATION"]{
-    justify-content:center;
+    justify-content:flex-start;
+    align-items:stretch;
   }
 
   .page[data-title="LETTER"] .page-inner,
@@ -722,12 +723,12 @@
   .page[data-title="ACCEPTED"] .page-inner,
   .page[data-title="LOCATION"] .page-inner{
     width:100%;
-    min-height: min(100%, 100dvh);
+    max-width:560px;
     display:flex;
     flex-direction:column;
-    justify-content:center;
     align-items:center;
     gap:1rem;
+    margin:0 auto;
     padding-bottom:clamp(1rem, 3.5vw, 2rem);
   }
 
