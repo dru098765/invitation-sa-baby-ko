@@ -224,6 +224,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
   overflow-y:auto;
   overflow-x:hidden;
   display:flex;
+  flex-direction:column;
   justify-content:flex-start;
   align-items:center;
   padding:
@@ -251,36 +252,6 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
 @media (min-width:1024px){
   .page{ padding-left:3rem; padding-right:3rem; }
   .page-inner{ max-width:min(100%, 1100px); }
-}
-@media (max-width:768px){
-  .page{
-    padding:
-      calc(var(--topbar-h) + .5rem)
-      1rem
-      calc(var(--nav-h) + 1rem);
-  }
-  .page-inner{ max-width:100%; }
-}
-@media (max-width:360px){
-  .page{ padding-left:0.55rem; padding-right:0.55rem; padding-top:0.1rem; padding-bottom:calc(var(--nav-h) + 0.75rem); }
-  .page-inner{ gap:0.18rem; }
-  .section-head{ margin-bottom:0.7rem; }
-  .selection-card, .briefing-card, .note-card, .center-card{ padding:1rem 0.8rem; }
-  .polaroid-grid{ gap:0.7rem; }
-  .polaroid{ width:min(92vw, 280px); padding:0.5rem 0.5rem 0.85rem; }
-  .polaroid-cap{ font-size:1rem; }
-  .sticky-note{ max-width:100%; padding:0.8rem 0.85rem; font-size:0.88rem; }
-  .note-card p{ font-size:0.95rem; line-height:1.55; }
-  .final-buttons{ gap:1rem; margin-top:1.8rem; }
-  .btn{ font-size:0.92rem; padding:0.8rem 1rem; }
-  .flip-card{ width:min(88vw, 250px); }
-  .celebration-inline-wrap{ min-height:min(230px, 46vh); padding-top:0.2rem; }
-  .celebration-title{ font-size:clamp(1.6rem, 8vw, 2.05rem); }
-  .celebration-sub{ font-size:0.92rem; }
-  .location-grid{ gap:0.75rem; width:100%; }
-  .location-photo{ min-height:130px; padding:0.85rem; }
-  .location-info-card, .location-message-card{ padding:0.9rem 0.85rem; }
-  .enter-cta{ margin-top:2.6rem; }
 }
 
 .file-tab{ font-size:0.66rem; letter-spacing:0.16em; color:var(--cocoa-soft); text-align:center; margin-bottom:0.7rem; opacity:0.85; font-weight:700; }
@@ -736,7 +707,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
 }
 
 @media (max-width: 360px){
-  .page{ padding-left:0.65rem; padding-right:0.65rem; padding-top:0.15rem; padding-bottom:calc(var(--nav-h) + 0.7rem); }
+  .page{ padding-left:0.65rem; padding-right:0.65rem; padding-top:calc(var(--topbar-h) + 0.4rem); padding-bottom:calc(var(--nav-h) + 0.7rem); }
   .page-inner{ gap:0.2rem; }
   .section-head{ margin-bottom:0.75rem; }
   .selection-card, .briefing-card, .note-card, .center-card{ padding:1rem 0.85rem; }
