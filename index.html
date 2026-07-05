@@ -44,9 +44,6 @@
   }
 
   /* ---------- APP SHELL ---------- */
-  /* Fills the real viewport at every breakpoint — mobile, tablet, and desktop.
-     Inner content width is controlled per-section via .page-inner max-width,
-     not by constraining this shell to a phone-sized box. */
   #app-frame{
     position:relative;
     width:100%;
@@ -68,7 +65,6 @@
     font-size:0.66rem; color: var(--gold-text); font-weight:700;
   }
 
-  /* Accessible, theme-matched focus indicator for keyboard users */
   a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
     outline:none; box-shadow: var(--focus-ring); border-radius:10px;
   }
@@ -76,7 +72,6 @@
   .envelope-wrap:focus-visible .envelope-body{ box-shadow: var(--shadow), var(--focus-ring); }
   .flip-card:focus-visible .flip-front, .flip-card:focus-visible .flip-back{ box-shadow: var(--shadow), var(--focus-ring); }
 
-  /* ambient specks */
   #bg-particles{ position:absolute; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
   .particle{ position:absolute; opacity:0.14; will-change:transform; color:var(--rose-deep); }
 
@@ -101,7 +96,6 @@
   .intro-sub{ font-family:var(--display); font-style:italic; color:var(--cocoa-soft); font-size:1.05rem; margin-top:1.1rem; max-width:440px; line-height:1.6; }
   .intro-continue{ margin-top:2.4rem; }
 
-  /* Screen 2: system scan */
   .intro-scan-title{ font-size:clamp(1.3rem,4.5vw,1.7rem); color:var(--cocoa); margin-top:0.6rem; letter-spacing:0.02em; }
   .scan-lines{ list-style:none; margin-top:1.8rem; display:flex; flex-direction:column; gap:0.75rem; text-align:left; }
   .scan-lines li{
@@ -118,7 +112,6 @@
   #scan-continue{ opacity:0; pointer-events:none; transition: opacity 0.5s ease; }
   #scan-continue.show{ opacity:1; pointer-events:auto; }
 
-  /* Screen 3: report card */
   .report-card{
     background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--apricot);
     padding:clamp(1.6rem,5vw,2.4rem); margin-top:1.4rem; max-width:460px; text-align:left;
@@ -239,19 +232,16 @@
     padding: calc(var(--topbar-h) + clamp(1.2rem,4vw,2rem)) 1.1rem calc(var(--nav-h) + 1.8rem);
     scrollbar-width:thin;
   }
-  .page-inner{ width:100%; max-width:560px; margin:auto; }
+  .page-inner{ width:100%; max-width:560px; margin:0 auto; }
   .page.centered{ justify-content:center; }
-  /* Gentle entrance for the active page's content — skipped entirely under reduced motion */
   @keyframes page-enter{
     from{ opacity:0; transform:translateY(10px); }
     to{ opacity:1; transform:translateY(0); }
   }
   .page-inner.entering{ animation: page-enter 0.5s cubic-bezier(.2,.8,.2,1) both; }
-  /* Tablet: wider reading column, grids get room to sit two-up */
   @media (min-width:768px){
     .page-inner{ max-width:760px; }
   }
-  /* Desktop/laptop: expand to a real content width, still centered */
   @media (min-width:1024px){
     .page-inner{ max-width:1200px; }
     .page{ padding-left:3rem; padding-right:3rem; }
@@ -261,8 +251,8 @@
   .section-head h2{ font-size:clamp(1.5rem,5vw,2.2rem); color:var(--cocoa); margin-top:0.45rem; }
   .section-head .rule{ width:52px; height:2px; background:linear-gradient(90deg,var(--rose-deep),var(--gold)); margin:0.85rem auto 0; border-radius:3px; }
 
-  /* ---------- STATEMENT PAGES (full-bleed, minimal) ---------- */
-  .statement{ text-align:center; padding:1rem 0.5rem; }
+  /* ---------- STATEMENT PAGES ---------- */
+  .statement{ text-align:center; padding:1rem 0.5rem; margin:0 auto; max-width:560px; }
   .statement .eyebrow{ display:block; margin-bottom:1.1rem; }
   .statement h1{ font-size:clamp(2.1rem,8vw,3.2rem); color:var(--rose-deep); line-height:1.14; }
   .statement .lede{ font-family:var(--display); font-style:italic; font-size:1rem; color:var(--cocoa-soft); margin-top:1rem; }
@@ -276,16 +266,47 @@
   .u-center{ margin-left:auto; margin-right:auto; }
   .u-flex-center{ display:flex; align-items:center; justify-content:center; }
 
-  /* ---------- EVIDENCE: POLAROIDS (max 4, 2x2 grid, always centered) ---------- */
-  .evidence-board{ position:relative; width:100%; }
-  .evidence-strings{ position:absolute; inset:-6% ; width:112%; height:112%; left:-6%; top:-6%; pointer-events:none; z-index:0; }
+  /* ---------- SELECTION REPORT (NEW PAGE) ---------- */
+  .selection-wrap{ display:flex; justify-content:center; width:100%; }
+  .selection-card{
+    background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
+    border:1px solid var(--apricot); padding:clamp(1.9rem,5.5vw,2.8rem);
+    max-width:600px; width:100%; margin:0 auto; position:relative; text-align:center;
+  }
+  .selection-stamp{
+    display:inline-flex; align-items:center; gap:0.4rem; margin:0 auto 1.4rem;
+    background:linear-gradient(135deg,var(--gold-deep),var(--gold)); color:var(--white);
+    font-weight:800; letter-spacing:0.12em; text-transform:uppercase; font-size:0.68rem;
+    padding:0.45rem 1.05rem; border-radius:999px; box-shadow:var(--shadow-soft);
+    transform:rotate(-2deg); border:1px solid rgba(255,255,255,0.4);
+  }
+  .selection-heading{ font-size:0.7rem; letter-spacing:0.18em; color:var(--rose-deep); font-weight:800; text-transform:uppercase; margin-bottom:0.6rem; }
+  .selection-intro{ font-family:var(--display); font-style:italic; color:var(--cocoa); font-size:1.05rem; line-height:1.7; max-width:460px; margin:0 auto 1.5rem; }
+  .selection-list{
+    list-style:none; text-align:left; display:grid; gap:0.85rem;
+    max-width:460px; margin:0 auto 1.6rem; padding-top:0.4rem; border-top:1px dashed var(--apricot);
+  }
+  .selection-list li{
+    display:flex; align-items:flex-start; gap:0.65rem; line-height:1.55; font-size:0.98rem; color:var(--cocoa);
+    padding-top:0.85rem;
+  }
+  .selection-list li:first-child{ padding-top:0.85rem; }
+  .selection-list li .tick{ color:var(--gold-deep); font-weight:800; flex-shrink:0; margin-top:0.1rem; }
+  .selection-verdict{
+    margin-top:0.6rem; padding-top:1.2rem; border-top:1px dashed var(--apricot);
+    font-family:var(--display); font-style:italic; font-size:1.15rem; color:var(--rose-deep); text-align:center;
+  }
+
+  /* ---------- EVIDENCE: PREMIUM POLAROIDS ---------- */
+  .evidence-board{ position:relative; width:100%; display:flex; flex-direction:column; align-items:center; }
+  .evidence-strings{ position:absolute; inset:-6%; width:112%; height:112%; left:-6%; top:-6%; pointer-events:none; z-index:0; }
   .evidence-strings line{ stroke:var(--rose-deep); stroke-width:0.35; opacity:0.5; }
   .evidence-strings circle{ fill:var(--gold-deep); }
   .evidence-tag{
-    position:absolute; top:-10px; left:10px; z-index:2;
+    position:absolute; top:-10px; left:50%; transform:translateX(-50%) rotate(-3deg); z-index:2;
     background:var(--rose-deep); color:var(--white); font-size:0.55rem; font-weight:800;
     letter-spacing:0.08em; text-transform:uppercase; padding:0.2rem 0.55rem; border-radius:4px;
-    box-shadow:var(--shadow-soft); transform:rotate(-3deg);
+    box-shadow:var(--shadow-soft); white-space:nowrap;
   }
   .sticky-note{
     position:relative; margin:1.8rem auto 0; max-width:230px; background:var(--apricot);
@@ -299,40 +320,51 @@
   .polaroid-grid{
     display:grid;
     grid-template-columns:repeat(2, minmax(0,1fr));
-    gap: clamp(1rem,4vw,1.6rem);
+    gap: clamp(1.1rem,4vw,1.8rem);
     width:100%;
-    max-width:400px;
+    max-width:420px;
     margin:0 auto;
     justify-items:center;
+    align-items:start;
     position:relative;
     z-index:1;
   }
-  @media (max-width:380px){
+  @media (max-width:359px){
     .polaroid-grid{ grid-template-columns:1fr; max-width:220px; }
   }
   @media (min-width:768px){
-    .polaroid-grid{ max-width:560px; gap:2rem; }
+    .polaroid-grid{ max-width:580px; gap:2.1rem; }
   }
   @media (min-width:1024px){
-    .polaroid-grid{ max-width:660px; gap:2.4rem; }
+    .polaroid-grid{ max-width:680px; gap:2.5rem; }
   }
   .polaroid{
     width:100%;
-    max-width:180px;
+    max-width:190px;
     aspect-ratio:3/4;
     background:var(--white);
-    border-radius:6px;
-    padding:0.6rem 0.6rem 1rem;
-    box-shadow:var(--shadow-soft);
+    border-radius:10px;
+    padding:0.65rem 0.65rem 1.3rem;
+    box-shadow:
+      0 2px 4px rgba(140,91,74,0.10),
+      0 14px 28px -12px rgba(140,91,74,0.32),
+      0 28px 46px -30px rgba(140,91,74,0.28);
     text-align:center;
     display:flex;
     flex-direction:column;
     position:relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.32s cubic-bezier(.2,.8,.2,1), box-shadow 0.32s ease;
   }
-  .polaroid:hover{ transform:rotate(0deg) translateY(-4px) scale(1.03); box-shadow:var(--shadow); z-index:2; }
+  .polaroid:hover, .polaroid:focus-within{
+    transform:rotate(0deg) translateY(-6px) scale(1.035);
+    box-shadow:
+      0 4px 8px rgba(140,91,74,0.12),
+      0 20px 36px -14px rgba(140,91,74,0.38),
+      0 34px 54px -28px rgba(140,91,74,0.32);
+    z-index:2;
+  }
   @media (min-width:768px){
-    .polaroid{ max-width:240px; }
+    .polaroid{ max-width:250px; }
   }
   .polaroid:nth-child(1){ transform:rotate(-4deg); }
   .polaroid:nth-child(2){ transform:rotate(3deg); }
@@ -340,12 +372,12 @@
   .polaroid:nth-child(4){ transform:rotate(-3deg); }
   .polaroid-photo{
     width:100%;
-    flex:1;
-    border-radius:3px;
+    aspect-ratio:1/1;
+    border-radius:4px;
     background:var(--apricot-soft);
     border:2px dashed var(--gold-soft);
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.3rem;
-    margin-bottom:0.65rem;
+    margin-bottom:0.75rem;
     overflow:hidden;
   }
   .polaroid-photo img{
@@ -366,12 +398,12 @@
   .briefing-card p.status{ font-weight:800; letter-spacing:0.02em; color:var(--gold-text); margin-top:1.3rem; font-size:0.86rem; text-transform:uppercase; }
 
   /* ---------- DETAILS GRID ---------- */
-  .details-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:0.85rem; }
+  .details-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:0.85rem; max-width:920px; margin:0 auto; }
   @media (min-width:768px){
     .details-grid{ grid-template-columns:repeat(2,1fr); }
   }
   @media (min-width:1024px){
-    .details-grid{ grid-template-columns:repeat(3,1fr); max-width:920px; margin:0 auto; }
+    .details-grid{ grid-template-columns:repeat(3,1fr); }
   }
   .detail-card{
     background:var(--white); border-radius:18px; padding:1.3rem; box-shadow:var(--shadow-soft); border:1px solid var(--apricot);
@@ -386,10 +418,7 @@
   .detail-card ul li::before{ content:'· '; color:var(--gold-deep); font-weight:800; }
 
   /* ---------- DOSSIER ---------- */
-  .dossier{ background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; border:1px solid var(--apricot); }
-  @media (min-width:1024px){
-    .dossier{ max-width:900px; margin:0 auto; }
-  }
+  .dossier{ background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; border:1px solid var(--apricot); max-width:900px; margin:0 auto; }
   .dossier-top{
     background:linear-gradient(135deg,var(--rose),var(--rose-deep)); color:var(--white); padding:1.2rem 1.5rem;
     display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;
@@ -435,7 +464,7 @@
   .note-card p{ font-family:var(--display); font-style:italic; font-size:1.18rem; line-height:1.65; margin-bottom:0.55rem; color:var(--cocoa); }
   .note-card .sign{ text-align:right; margin-top:1rem; color:var(--rose-deep); font-family:var(--display); font-size:1.2rem; font-style:italic; }
 
-  /* ---------- REWARD (flip card doubling as the one photo) ---------- */
+  /* ---------- REWARD ---------- */
   .reward-wrap{ display:flex; justify-content:center; }
   .flip-card{ width:min(80vw,300px); aspect-ratio:3/4.1; perspective:1600px; cursor:pointer; }
   .flip-inner{ position:relative; width:100%; height:100%; transition:transform 0.8s cubic-bezier(.4,0,.2,1); transform-style:preserve-3d; }
@@ -489,7 +518,7 @@
   .modal-box{
     background:var(--white); border-radius:24px; padding:2.2rem 1.8rem; max-width:400px; width:100%; text-align:center;
     box-shadow:0 30px 70px -20px rgba(140,91,74,0.4); transform:scale(0.85) translateY(20px); transition:transform 0.4s cubic-bezier(.2,.9,.3,1.3);
-    position:relative; border:1px solid var(--apricot);
+    position:relative; border:1px solid var(--apricot); margin:0 auto;
   }
   .modal-overlay.show .modal-box{ transform:scale(1) translateY(0); }
   .modal-box .eyebrow{ display:block; margin-bottom:0.8rem; }
@@ -517,7 +546,7 @@
   }
   .celebration-screen.show{ opacity:1; visibility:visible; pointer-events:auto; }
   .celebration-hearts, .celebration-confetti{ position:absolute; inset:0; pointer-events:none; overflow:hidden; border-radius:0; }
-  .celebration-content{ position:relative; z-index:2; max-width:480px; }
+  .celebration-content{ position:relative; z-index:2; max-width:480px; margin:0 auto; }
   .celebration-title{ font-size:clamp(2.1rem,7vw,3rem); color:var(--rose-deep); margin-top:0.8rem; line-height:1.15; }
   .celebration-sub{ font-family:var(--display); font-style:italic; color:var(--cocoa); font-size:1.05rem; margin-top:1rem; }
   .celebration-status{
@@ -554,8 +583,11 @@
 
   .center-card{
     background:var(--white); border-radius:30px; padding: clamp(2rem,5vw,3rem) clamp(1.3rem,5vw,2.6rem);
-    box-shadow: var(--shadow); border:1px solid var(--apricot); max-width:560px; text-align:center; position:relative;
+    box-shadow: var(--shadow); border:1px solid var(--apricot); max-width:560px; width:100%; text-align:center; position:relative; margin:0 auto;
   }
+
+  /* Generic centered-page helper used across sections */
+  .page-inner > *{ margin-left:auto; margin-right:auto; }
 </style>
 </head>
 <body>
@@ -647,10 +679,10 @@
 <!-- ============ PAGE DECK ============ -->
 <div id="deck">
 
-  <!-- PAGE 0: COVER (statement) -->
+  <!-- PAGE 0: COVER -->
   <div class="page centered" data-title="COVER">
     <div class="page-inner">
-      <div class="file-tab">FILE 01 / 08 · COVER</div>
+      <div class="file-tab">FILE 01 / 09 · COVER</div>
       <div class="statement">
         <span class="eyebrow">A Classified Invitation</span>
         <h1>Mission:<br>Date Night</h1>
@@ -666,7 +698,7 @@
   <!-- PAGE 1: BRIEFING -->
   <div class="page" data-title="BRIEFING">
     <div class="page-inner">
-      <div class="file-tab">FILE 02 / 08 · BRIEFING</div>
+      <div class="file-tab">FILE 02 / 09 · BRIEFING</div>
       <div class="section-head"><span class="eyebrow">Briefing</span><h2>Mission Briefing</h2><div class="rule"></div></div>
       <div class="briefing-card">
         <p>Attention, Agent Spidey Baby.</p>
@@ -678,10 +710,33 @@
     </div>
   </div>
 
-  <!-- PAGE 2: MISSION DETAILS -->
+  <!-- PAGE 2: WHY THIS AGENT WAS SELECTED (NEW) -->
+  <div class="page" data-title="SELECTION">
+    <div class="page-inner">
+      <div class="file-tab">FILE 03 / 09 · AGENT SELECTION</div>
+      <div class="section-head"><span class="eyebrow">Personnel Review</span><h2>Why This Agent Was Selected</h2><div class="rule"></div></div>
+      <div class="selection-wrap">
+        <div class="selection-card">
+          <div class="selection-stamp">✔ Approved For Mission</div>
+          <div class="selection-heading">Selection Report</div>
+          <p class="selection-intro">After extensive investigation, Agent Spidey Baby has been selected for this mission because:</p>
+          <ul class="selection-list">
+            <li><span class="tick" aria-hidden="true">✓</span> Has the ability to make ordinary days feel special</li>
+            <li><span class="tick" aria-hidden="true">✓</span> Possesses an incredibly contagious smile</li>
+            <li><span class="tick" aria-hidden="true">✓</span> Makes Captain James laugh without even trying</li>
+            <li><span class="tick" aria-hidden="true">✓</span> Is someone Captain James genuinely enjoys spending time with</li>
+            <li><span class="tick" aria-hidden="true">✓</span> Has become one of Captain James' favorite people</li>
+          </ul>
+          <div class="selection-verdict">Final Assessment: "No better candidate was found."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 3: MISSION DETAILS -->
   <div class="page" data-title="DETAILS">
     <div class="page-inner">
-      <div class="file-tab">FILE 03 / 08 · FILE CONTENTS</div>
+      <div class="file-tab">FILE 04 / 09 · FILE CONTENTS</div>
       <div class="section-head"><span class="eyebrow">File Contents</span><h2>Mission Details</h2><div class="rule"></div></div>
       <div class="details-grid">
         <div class="detail-card"><span class="icon" aria-hidden="true">🗂️</span><h3>MISSION NAME</h3><div class="val">Operation: Us Time</div></div>
@@ -694,10 +749,10 @@
     </div>
   </div>
 
-  <!-- PAGE 3: AGENT DOSSIER -->
+  <!-- PAGE 4: AGENT DOSSIER -->
   <div class="page" data-title="DOSSIER">
     <div class="page-inner">
-      <div class="file-tab">FILE 04 / 08 · PERSONNEL</div>
+      <div class="file-tab">FILE 05 / 09 · PERSONNEL</div>
       <div class="section-head"><span class="eyebrow">Personnel File</span><h2>Agent Dossier</h2><div class="rule"></div></div>
       <div class="dossier">
         <div class="dossier-top"><span class="file-no">AGENT FILE #001</span><span class="file-no">🕷️ SPIDER CLEARANCE</span></div>
@@ -721,10 +776,10 @@
     </div>
   </div>
 
-  <!-- PAGE 4: EVIDENCE (4 polaroids, 2x2, centered) -->
+  <!-- PAGE 5: EVIDENCE -->
   <div class="page" data-title="EVIDENCE">
     <div class="page-inner">
-      <div class="file-tab">FILE 05 / 08 · EVIDENCE COLLECTED</div>
+      <div class="file-tab">FILE 06 / 09 · EVIDENCE COLLECTED</div>
       <div class="section-head"><span class="eyebrow">Evidence Collected</span><h2>Evidence Collected</h2><div class="rule"></div></div>
       <div class="evidence-board">
         <svg class="evidence-strings" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -761,10 +816,10 @@
     </div>
   </div>
 
-  <!-- PAGE 5: MESSAGE -->
+  <!-- PAGE 6: MESSAGE -->
   <div class="page" data-title="LETTER">
     <div class="page-inner">
-      <div class="file-tab">FILE 06 / 08 · A LETTER</div>
+      <div class="file-tab">FILE 07 / 09 · A LETTER</div>
       <div class="section-head"><span class="eyebrow">A Letter</span><h2>From Captain James</h2><div class="rule"></div></div>
       <div class="note-card">
         <p>hello, spidey baby.</p>
@@ -778,10 +833,10 @@
     </div>
   </div>
 
-  <!-- PAGE 5: REWARD (the one photo lives here, as a locket) -->
+  <!-- PAGE 7: REWARD -->
   <div class="page centered" data-title="REWARD">
     <div class="page-inner">
-      <div class="file-tab">FILE 07 / 08 · CLASSIFIED REWARD</div>
+      <div class="file-tab">FILE 08 / 09 · CLASSIFIED REWARD</div>
       <div class="section-head"><span class="eyebrow">Classified Reward File</span><h2>Mission Reward</h2><div class="rule"></div></div>
       <div class="reward-wrap">
         <div class="flip-card" id="flip-card" role="button" tabindex="0" aria-label="Flip to reveal the mission reward" onclick="flipCard()">
@@ -812,10 +867,10 @@
     </div>
   </div>
 
-  <!-- PAGE 6: FINAL AUTHORIZATION + FOOTER -->
+  <!-- PAGE 8: FINAL AUTHORIZATION + FOOTER -->
   <div class="page centered" data-title="FINAL">
     <div class="page-inner">
-      <div class="file-tab">FILE 08 / 08 · FINAL AUTHORIZATION</div>
+      <div class="file-tab">FILE 09 / 09 · FINAL AUTHORIZATION</div>
       <div class="final-wrap">
         <div class="center-card">
           <span class="eyebrow">Final Authorization</span>
@@ -1049,7 +1104,7 @@ document.addEventListener('keydown', (e)=>{
   }, { passive:true });
 })();
 
-/* Debounced resize — avoids re-laying out the deck on every pixel of a drag-resize */
+/* Debounced resize */
 let resizeTimer;
 window.addEventListener('resize', ()=>{
   clearTimeout(resizeTimer);
@@ -1065,7 +1120,7 @@ function typewriterBriefing(){
   const statusEl = card.querySelector('p.status');
   const originals = paras.map(p => p.textContent);
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduced) return; /* leave the text exactly as authored */
+  if(reduced) return;
 
   paras.forEach(p => p.textContent = '');
   if(statusEl) statusEl.style.opacity = '0';
@@ -1117,7 +1172,7 @@ function spawnFloatingHearts(containerId, count){
 spawnFloatingHearts('bg-particles', 9);
 spawnFloatingHearts('intro-icons', 7);
 
-/* Subtle desktop-only parallax on the ambient hearts — off for touch devices and reduced motion */
+/* Subtle desktop-only parallax */
 (function(){
   const canParallax = window.matchMedia('(pointer:fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!canParallax) return;
@@ -1137,7 +1192,7 @@ document.getElementById('flip-card').addEventListener('keydown', (e)=>{
   if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flipCard(); }
 });
 
-/* ================= SECRET CONFIDENTIAL NOTES (5 taps on the threat badge) ================= */
+/* ================= SECRET CONFIDENTIAL NOTES ================= */
 let secretClicks = 0;
 const secretBadge = document.getElementById('secret-badge');
 function bumpSecretBadge(){
