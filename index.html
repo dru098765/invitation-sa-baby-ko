@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+=<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -43,7 +43,7 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* ---------- APP SHELL ---------- */
+  
   #app-frame{
     position:relative;
     width:100%;
@@ -75,7 +75,7 @@
   #bg-particles{ position:absolute; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
   .particle{ position:absolute; opacity:0.14; will-change:transform; color:var(--rose-deep); }
 
-  /* ---------- INTRO SEQUENCE ---------- */
+  
   #intro-screen{
     position:absolute; inset:0; z-index:95; display:flex; align-items:center; justify-content:center;
     background:
@@ -128,7 +128,7 @@
     font-family:var(--display); font-style:italic; color:var(--rose-deep); font-size:1.05rem; text-align:center;
   }
 
-  /* ---------- ENVELOPE ---------- */
+  
   #envelope-screen{
     position:absolute; inset:0; z-index:90; display:flex; align-items:center; justify-content:center; flex-direction:column;
     padding:2rem 1.2rem; text-align:center;
@@ -198,7 +198,7 @@
   }
   .enter-btn:hover{ transform:translateY(-3px) scale(1.02); }
 
-  /* ---------- MISSION PROGRESS TRACKER ---------- */
+  
   #progress-wrap{
     position:absolute; top:0; left:0; right:0; z-index:55; height:var(--topbar-h);
     background: rgba(255,249,243,0.94); backdrop-filter: blur(10px);
@@ -221,7 +221,7 @@
     transition: width 0.5s cubic-bezier(.4,0,.2,1);
   }
 
-  /* ---------- PAGE DECK ---------- */
+  
   #deck{
     position:absolute; inset:0; z-index:5; display:flex; height:100%; width:100%;
     transition: transform 0.6s cubic-bezier(.4,0,.2,1); will-change: transform;
@@ -251,7 +251,7 @@
   .section-head h2{ font-size:clamp(1.5rem,5vw,2.2rem); color:var(--cocoa); margin-top:0.45rem; }
   .section-head .rule{ width:52px; height:2px; background:linear-gradient(90deg,var(--rose-deep),var(--gold)); margin:0.85rem auto 0; border-radius:3px; }
 
-  /* ---------- STATEMENT PAGES ---------- */
+  
   .statement{ text-align:center; padding:1rem 0.5rem; margin:0 auto; max-width:560px; }
   .statement .eyebrow{ display:block; margin-bottom:1.1rem; }
   .statement h1{ font-size:clamp(2.1rem,8vw,3.2rem); color:var(--rose-deep); line-height:1.14; }
@@ -262,11 +262,11 @@
   .fromfor .name{ font-family:var(--display); font-size:1.1rem; margin-top:0.3rem; font-weight:600; }
   .statement-line{ font-family:var(--display); font-style:italic; font-size:clamp(1.4rem,5.5vw,1.9rem); color:var(--cocoa); line-height:1.5; max-width:480px; margin:0 auto; }
 
-  /* ---------- LAYOUT UTILITIES ---------- */
+  
   .u-center{ margin-left:auto; margin-right:auto; }
   .u-flex-center{ display:flex; align-items:center; justify-content:center; }
 
-  /* ---------- SELECTION REPORT (NEW PAGE) ---------- */
+  
   .selection-wrap{ display:flex; justify-content:center; width:100%; }
   .selection-card{
     background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
@@ -297,7 +297,7 @@
     font-family:var(--display); font-style:italic; font-size:1.15rem; color:var(--rose-deep); text-align:center;
   }
 
-  /* ---------- EVIDENCE: PREMIUM POLAROIDS ---------- */
+  
   .evidence-board{ position:relative; width:100%; display:flex; flex-direction:column; align-items:center; }
   .evidence-strings{ position:absolute; inset:-6%; width:112%; height:112%; left:-6%; top:-6%; pointer-events:none; z-index:0; }
   .evidence-strings line{ stroke:var(--rose-deep); stroke-width:0.35; opacity:0.5; }
@@ -387,7 +387,7 @@
   .polaroid-photo .label{ font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); font-weight:700; }
   .polaroid-cap{ font-family:var(--display); font-style:italic; font-size:0.85rem; color:var(--cocoa); line-height:1.35; }
 
-  /* ---------- BRIEFING CARD ---------- */
+  
   .briefing-card{
     background: var(--white);
     border-radius: var(--radius); padding:clamp(1.7rem,5vw,2.5rem); box-shadow:var(--shadow);
@@ -397,7 +397,7 @@
   .briefing-card p{ margin-bottom:1rem; line-height:1.8; color:var(--cocoa); font-size:1.01rem; }
   .briefing-card p.status{ font-weight:800; letter-spacing:0.02em; color:var(--gold-text); margin-top:1.3rem; font-size:0.86rem; text-transform:uppercase; }
 
-  /* ---------- DETAILS GRID ---------- */
+  
   .details-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:0.85rem; max-width:920px; margin:0 auto; }
   @media (min-width:768px){
     .details-grid{ grid-template-columns:repeat(2,1fr); }
@@ -417,7 +417,7 @@
   .detail-card ul li{ padding:0.12rem 0; }
   .detail-card ul li::before{ content:'· '; color:var(--gold-deep); font-weight:800; }
 
-  /* ---------- DOSSIER ---------- */
+  
   .dossier{ background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; border:1px solid var(--apricot); max-width:900px; margin:0 auto; }
   .dossier-top{
     background:linear-gradient(135deg,var(--rose),var(--rose-deep)); color:var(--white); padding:1.2rem 1.5rem;
@@ -441,14 +441,14 @@
   #secret-badge{ cursor:pointer; transition: transform 0.18s ease; }
   #secret-badge.badge-bump{ transform:scale(1.18); }
 
-  /* ---------- SECRET CONFIDENTIAL NOTES ---------- */
+  
   .secret-lock{ font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-text); font-weight:800; display:block; margin-bottom:0.6rem; }
   .secret-list{ list-style:none; text-align:left; margin-top:0.9rem; display:grid; gap:0.5rem; }
   .secret-list li{ font-family:var(--display); font-style:italic; font-size:1.02rem; color:var(--cocoa); }
   .secret-list li::before{ content:'♡ '; color:var(--rose-deep); }
   .secret-note{ margin-top:1.2rem; font-family:var(--display); font-style:italic; color:var(--rose-deep); font-size:1rem; line-height:1.6; }
 
-  /* ---------- MESSAGE ---------- */
+  
   .note-card{
     background: var(--white);
     background-image: repeating-linear-gradient(var(--white), var(--white) 33px, rgba(198,112,123,0.12) 34px);
@@ -464,7 +464,7 @@
   .note-card p{ font-family:var(--display); font-style:italic; font-size:1.18rem; line-height:1.65; margin-bottom:0.55rem; color:var(--cocoa); }
   .note-card .sign{ text-align:right; margin-top:1rem; color:var(--rose-deep); font-family:var(--display); font-size:1.2rem; font-style:italic; }
 
-  /* ---------- REWARD ---------- */
+  
   .reward-wrap{ display:flex; justify-content:center; }
   .flip-card{ width:min(80vw,300px); aspect-ratio:3/4.1; perspective:1600px; cursor:pointer; }
   .flip-inner{ position:relative; width:100%; height:100%; transition:transform 0.8s cubic-bezier(.4,0,.2,1); transform-style:preserve-3d; }
@@ -489,7 +489,7 @@
   .flip-back li{ padding:0.2rem 0; font-size:0.92rem; }
   .flip-back li::before{ content:'· '; color:var(--gold); font-weight:800; }
 
-  /* ---------- FINAL AUTHORIZATION ---------- */
+  
   .final-buttons{ display:flex; flex-direction:column; gap:0.9rem; margin-top:2rem; align-items:center; }
   .btn{
     font-family:var(--display); font-weight:600; font-size:0.98rem; padding:0.92rem 2rem; border-radius:999px; border:none;
@@ -508,7 +508,7 @@
   .footer-names .for{ font-size:0.66rem; letter-spacing:0.22em; color:var(--cocoa-soft); display:block; margin:0.3rem 0; font-family:var(--body); font-weight:700; }
   .footer-quote{ font-family:var(--display); font-style:italic; font-size:1.15rem; color:var(--rose-deep); margin-top:1.05rem; max-width:400px; margin-left:auto; margin-right:auto; line-height:1.5; text-align:center; }
 
-  /* ---------- MODAL ---------- */
+  
   .modal-overlay{
     position:absolute; inset:0; background:rgba(140,91,74,0.35); backdrop-filter:blur(4px);
     display:flex; align-items:center; justify-content:center; z-index:200; padding:1.4rem;
@@ -533,7 +533,7 @@
   .confetti span{ position:absolute; top:-10%; width:8px; height:14px; opacity:0.9; animation: confetti-fall 1.8s ease-in forwards; }
   @keyframes confetti-fall{ to{ transform:translateY(420px) rotate(360deg); opacity:0; } }
 
-  /* ---------- MISSION COMPLETE CELEBRATION ---------- */
+  
   .celebration-screen{
     position:absolute; inset:0; z-index:150; display:flex; align-items:center; justify-content:center;
     text-align:center; padding:2rem 1.3rem; overflow:hidden;
@@ -555,7 +555,7 @@
   }
   #celebration-close{ margin-top:2rem; }
 
-  /* ---------- BOTTOM NAV ---------- */
+  
   #nav-bar{
     position:absolute; left:0; right:0; bottom:0; height:var(--nav-h); z-index:60;
     background: rgba(255,249,243,0.94); backdrop-filter: blur(10px);
@@ -577,7 +577,7 @@
   #nav-label{ font-size:0.6rem; letter-spacing:0.08em; color:var(--cocoa-soft); white-space:nowrap; display:none; font-weight:700; }
   @media (min-width:640px){ #nav-label{ display:block; } }
 
-  /* FINAL page vertical centering */
+  
   .page[data-title="FINAL"] .page-inner{ min-height: calc(100% - var(--nav-h)); display:flex; flex-direction:column; justify-content:center; align-items:center; }
   .final-wrap{ display:flex; flex-direction:column; align-items:center; width:100%; gap:1.6rem; }
 
@@ -586,7 +586,7 @@
     box-shadow: var(--shadow); border:1px solid var(--apricot); max-width:560px; width:100%; text-align:center; position:relative; margin:0 auto;
   }
 
-  /* Generic centered-page helper used across sections */
+  
   .page-inner > *{ margin-left:auto; margin-right:auto; }
 </style>
 </head>
@@ -596,7 +596,7 @@
 
 <div id="bg-particles" aria-hidden="true"></div>
 
-<!-- ============ INTRO SEQUENCE ============ -->
+
 <div id="intro-screen" class="screen-overlay">
 
   <div class="intro-slide active" data-slide="1">
@@ -644,7 +644,7 @@
 
 </div>
 
-<!-- ============ ENVELOPE ============ -->
+
 <div id="envelope-screen" class="screen-overlay">
   <div class="env-tag">a letter has arrived</div>
   <div class="envelope-wrap" id="envelope" role="button" tabindex="0" aria-label="Open the mission envelope" onclick="openEnvelope()">
@@ -670,16 +670,16 @@
   </div>
 </div>
 
-<!-- ============ MISSION PROGRESS TRACKER ============ -->
+
 <div id="progress-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Mission file progress">
   <div class="progress-label">Mission File Progress <span id="progress-pct">0%</span></div>
   <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
 </div>
 
-<!-- ============ PAGE DECK ============ -->
+
 <div id="deck">
 
-  <!-- PAGE 0: COVER -->
+  
   <div class="page centered" data-title="COVER">
     <div class="page-inner">
       <div class="file-tab">FILE 01 / 09 · COVER</div>
@@ -695,7 +695,7 @@
     </div>
   </div>
 
-  <!-- PAGE 1: BRIEFING -->
+  
   <div class="page" data-title="BRIEFING">
     <div class="page-inner">
       <div class="file-tab">FILE 02 / 09 · BRIEFING</div>
@@ -710,7 +710,7 @@
     </div>
   </div>
 
-  <!-- PAGE 2: WHY THIS AGENT WAS SELECTED (NEW) -->
+  
   <div class="page" data-title="SELECTION">
     <div class="page-inner">
       <div class="file-tab">FILE 03 / 09 · AGENT SELECTION</div>
@@ -733,7 +733,7 @@
     </div>
   </div>
 
-  <!-- PAGE 3: MISSION DETAILS -->
+  
   <div class="page" data-title="DETAILS">
     <div class="page-inner">
       <div class="file-tab">FILE 04 / 09 · FILE CONTENTS</div>
@@ -749,7 +749,7 @@
     </div>
   </div>
 
-  <!-- PAGE 4: AGENT DOSSIER -->
+  
   <div class="page" data-title="DOSSIER">
     <div class="page-inner">
       <div class="file-tab">FILE 05 / 09 · PERSONNEL</div>
@@ -776,7 +776,7 @@
     </div>
   </div>
 
-  <!-- PAGE 5: EVIDENCE -->
+  
   <div class="page" data-title="EVIDENCE">
     <div class="page-inner">
       <div class="file-tab">FILE 06 / 09 · EVIDENCE COLLECTED</div>
@@ -816,7 +816,7 @@
     </div>
   </div>
 
-  <!-- PAGE 6: MESSAGE -->
+  
   <div class="page" data-title="LETTER">
     <div class="page-inner">
       <div class="file-tab">FILE 07 / 09 · A LETTER</div>
@@ -833,7 +833,7 @@
     </div>
   </div>
 
-  <!-- PAGE 7: REWARD -->
+  
   <div class="page centered" data-title="REWARD">
     <div class="page-inner">
       <div class="file-tab">FILE 08 / 09 · CLASSIFIED REWARD</div>
@@ -867,7 +867,7 @@
     </div>
   </div>
 
-  <!-- PAGE 8: FINAL AUTHORIZATION + FOOTER -->
+  
   <div class="page centered" data-title="FINAL">
     <div class="page-inner">
       <div class="file-tab">FILE 09 / 09 · FINAL AUTHORIZATION</div>
@@ -890,7 +890,7 @@
 
 </div>
 
-<!-- ============ BOTTOM NAV BAR ============ -->
+
 <div id="nav-bar">
   <button class="nav-arrow" id="prev-btn" onclick="goPage(-1)" aria-label="Previous page">‹</button>
   <div id="nav-dots"></div>
@@ -898,7 +898,7 @@
   <button class="nav-arrow" id="next-btn" onclick="goPage(1)" aria-label="Next page">›</button>
 </div>
 
-<!-- ============ MODALS ============ -->
+
 <div class="modal-overlay" id="secret-overlay" role="dialog" aria-modal="true" aria-labelledby="secret-title">
   <div class="modal-box">
     <span class="secret-lock">🔓 Unlocked File</span>
@@ -926,7 +926,7 @@
   </div>
 </div>
 
-<!-- ============ MISSION COMPLETE CELEBRATION ============ -->
+
 <div class="celebration-screen" id="celebration-screen" role="dialog" aria-modal="true" aria-labelledby="celebration-title">
   <div class="celebration-hearts" id="celebration-hearts" aria-hidden="true"></div>
   <div class="celebration-confetti confetti" id="celebration-confetti" aria-hidden="true"></div>
@@ -939,10 +939,10 @@
   </div>
 </div>
 
-</div><!-- /#app-frame -->
+</div>
 
 <script>
-/* ================= ENVELOPE ================= */
+
 function openEnvelope(){
   const env = document.getElementById('envelope');
   if(env.classList.contains('open')) return;
@@ -982,7 +982,7 @@ function enterDeck(){
   goToPage(0, true);
 }
 
-/* ================= INTRO SEQUENCE ================= */
+
 const introSlides = document.querySelectorAll('.intro-slide');
 function showIntroSlide(n){
   introSlides.forEach(s=> s.classList.toggle('active', Number(s.dataset.slide) === n));
@@ -1017,7 +1017,7 @@ function startScanSequence(){
   setTimeout(()=> continueBtn.classList.add('show'), totalDelay + 750);
 }
 
-/* ================= PAGE DECK NAVIGATION ================= */
+
 const pages = Array.from(document.querySelectorAll('.page'));
 const deck = document.getElementById('deck');
 const dotsWrap = document.getElementById('nav-dots');
@@ -1074,7 +1074,7 @@ function playPageEnter(page){
   const inner = page.querySelector('.page-inner');
   if(!inner) return;
   inner.classList.remove('entering');
-  void inner.offsetWidth; /* restart animation */
+  void inner.offsetWidth; 
   inner.classList.add('entering');
 }
 function goPage(dir){ goToPage(current + dir); }
@@ -1104,14 +1104,14 @@ document.addEventListener('keydown', (e)=>{
   }, { passive:true });
 })();
 
-/* Debounced resize */
+
 let resizeTimer;
 window.addEventListener('resize', ()=>{
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(()=>{ goToPage(current, true); }, 120);
 });
 
-/* ================= TYPEWRITER: MISSION BRIEFING ================= */
+
 function typewriterBriefing(){
   const card = document.querySelector('.briefing-card');
   if(!card || card.dataset.typed) return;
@@ -1147,7 +1147,7 @@ function typewriterBriefing(){
   typeNextParagraph();
 }
 
-/* ================= REUSABLE FLOATING HEARTS ================= */
+
 const HEART_SVG = `<svg width="22" height="20" viewBox="0 0 26 24" fill="none"><path d="M13 22 C4 15 1 10 1 6.5 C1 3 3.5 1 6.5 1 C9 1 11 2.5 13 5 C15 2.5 17 1 19.5 1 C22.5 1 25 3 25 6.5 C25 10 22 15 13 22Z" fill="currentColor"/></svg>`;
 function spawnFloatingHearts(containerId, count){
   const wrap = document.getElementById(containerId);
@@ -1172,7 +1172,7 @@ function spawnFloatingHearts(containerId, count){
 spawnFloatingHearts('bg-particles', 9);
 spawnFloatingHearts('intro-icons', 7);
 
-/* Subtle desktop-only parallax */
+
 (function(){
   const canParallax = window.matchMedia('(pointer:fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!canParallax) return;
@@ -1186,13 +1186,13 @@ spawnFloatingHearts('intro-icons', 7);
   });
 })();
 
-/* ================= REWARD FLIP CARD ================= */
+
 function flipCard(){ document.getElementById('flip-card').classList.toggle('flipped'); }
 document.getElementById('flip-card').addEventListener('keydown', (e)=>{
   if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flipCard(); }
 });
 
-/* ================= SECRET CONFIDENTIAL NOTES ================= */
+
 let secretClicks = 0;
 const secretBadge = document.getElementById('secret-badge');
 function bumpSecretBadge(){
@@ -1209,7 +1209,7 @@ secretBadge.addEventListener('keydown', (e)=>{
   if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); bumpSecretBadge(); }
 });
 
-/* ================= MODALS ================= */
+
 let lastFocusedEl = null;
 function openOverlay(id){
   const overlay = document.getElementById(id);
@@ -1232,7 +1232,7 @@ document.addEventListener('keydown', (e)=>{
   if(document.getElementById('celebration-screen').classList.contains('show')) closeCelebration();
 });
 
-/* ================= MISSION COMPLETE CELEBRATION ================= */
+
 function openCelebration(){
   const screen = document.getElementById('celebration-screen');
   lastFocusedEl = document.activeElement;
@@ -1261,7 +1261,7 @@ function launchConfetti(wrapId){
   }
 }
 
-/* init nav state */
+
 updateNav();
 </script>
 </body>
