@@ -718,6 +718,8 @@
   .page[data-title="LOCATION"]{
     justify-content:flex-start;
     align-items:stretch;
+    padding-top:clamp(0.55rem, 2vw, 0.9rem);
+    padding-bottom:calc(var(--nav-h) + 1rem);
   }
 
   .page[data-title="LETTER"] .page-inner,
@@ -729,9 +731,31 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:0.7rem;
+    gap:0.45rem;
     margin:0 auto;
-    padding-bottom:clamp(0.8rem, 2.8vw, 1.4rem);
+    padding:0 0 clamp(0.7rem, 2.6vw, 1.1rem);
+    min-height:0;
+    flex:1 1 auto;
+  }
+
+  .page[data-title="LETTER"] .section-head,
+  .page[data-title="REWARD"] .section-head,
+  .page[data-title="FINAL"] .section-head,
+  .page[data-title="ACCEPTED"] .section-head,
+  .page[data-title="LOCATION"] .section-head{
+    margin-bottom:0.35rem;
+  }
+
+  .page[data-title="LETTER"] .note-card,
+  .page[data-title="REWARD"] .reward-wrap,
+  .page[data-title="FINAL"] .final-wrap,
+  .page[data-title="ACCEPTED"] .celebration-inline-wrap,
+  .page[data-title="LOCATION"] .unlock-wrap,
+  .page[data-title="LOCATION"] .location-grid,
+  .page[data-title="LOCATION"] .location-info-card,
+  .page[data-title="LOCATION"] .location-message-card{
+    width:100%;
+    margin:0;
   }
 
   @media (max-width: 480px){
@@ -793,6 +817,14 @@
   }
 
   @media (max-width: 430px){
+    .page[data-title="LETTER"],
+    .page[data-title="REWARD"],
+    .page[data-title="FINAL"],
+    .page[data-title="ACCEPTED"],
+    .page[data-title="LOCATION"]{
+      padding-top:0.25rem;
+      padding-bottom:calc(var(--nav-h) + 0.75rem);
+    }
     .page[data-title="LETTER"] .page-inner,
     .page[data-title="REWARD"] .page-inner,
     .page[data-title="FINAL"] .page-inner,
@@ -800,15 +832,15 @@
     .page[data-title="LOCATION"] .page-inner{
       width:100%;
       max-width:100%;
-      gap:0.45rem;
-      padding-bottom:0.75rem;
+      gap:0.3rem;
+      padding-bottom:0.65rem;
     }
     .page[data-title="LETTER"] .section-head,
     .page[data-title="REWARD"] .section-head,
     .page[data-title="FINAL"] .section-head,
     .page[data-title="ACCEPTED"] .section-head,
     .page[data-title="LOCATION"] .section-head{
-      margin-bottom:0.75rem;
+      margin-bottom:0.5rem;
     }
     .note-card,
     .center-card,
