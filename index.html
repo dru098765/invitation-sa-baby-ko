@@ -792,6 +792,45 @@
     #nav-label{ display:none; }
   }
 
+  @media (max-width: 430px){
+    .page[data-title="LETTER"] .page-inner,
+    .page[data-title="REWARD"] .page-inner,
+    .page[data-title="FINAL"] .page-inner,
+    .page[data-title="ACCEPTED"] .page-inner,
+    .page[data-title="LOCATION"] .page-inner{
+      width:100%;
+      max-width:100%;
+      gap:0.45rem;
+      padding-bottom:0.75rem;
+    }
+    .page[data-title="LETTER"] .section-head,
+    .page[data-title="REWARD"] .section-head,
+    .page[data-title="FINAL"] .section-head,
+    .page[data-title="ACCEPTED"] .section-head,
+    .page[data-title="LOCATION"] .section-head{
+      margin-bottom:0.75rem;
+    }
+    .note-card,
+    .center-card,
+    .location-info-card,
+    .location-message-card,
+    .location-photo{
+      width:100%;
+      max-width:100%;
+      box-sizing:border-box;
+    }
+    .note-card{ padding:0.95rem 0.82rem; border-radius:12px; }
+    .note-card p{ font-size:0.94rem; line-height:1.58; }
+    .flip-card{ width:min(88vw, 240px); max-width:100%; }
+    .final-buttons{ gap:0.6rem; margin-top:1rem; }
+    .btn{ padding:0.8rem 0.95rem; }
+    .location-grid{ gap:0.7rem; margin-bottom:0.8rem; }
+    .location-photo{ min-height:120px; padding:0.8rem; }
+    .location-info-card{ padding:0.95rem; }
+    .location-message-card{ padding:0.95rem 0.82rem; }
+    .celebration-inline-content{ padding:0 0.1rem; }
+    .celebration-title{ font-size:clamp(1.7rem, 8vw, 2.25rem); }
+  }
   @media (max-width: 360px){
     .page{ padding-left:0.65rem; padding-right:0.65rem; }
     .selection-card, .briefing-card, .note-card, .center-card{ padding:1rem 0.85rem; }
