@@ -708,6 +708,29 @@
   /* Generic centered-page helper used across sections */
   .page-inner > *{ margin-left:auto; margin-right:auto; }
 
+  .page[data-title="LETTER"],
+  .page[data-title="REWARD"],
+  .page[data-title="FINAL"],
+  .page[data-title="ACCEPTED"],
+  .page[data-title="LOCATION"]{
+    justify-content:center;
+  }
+
+  .page[data-title="LETTER"] .page-inner,
+  .page[data-title="REWARD"] .page-inner,
+  .page[data-title="FINAL"] .page-inner,
+  .page[data-title="ACCEPTED"] .page-inner,
+  .page[data-title="LOCATION"] .page-inner{
+    width:100%;
+    min-height: min(100%, 100dvh);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:1rem;
+    padding-bottom:clamp(1rem, 3.5vw, 2rem);
+  }
+
   @media (max-width: 480px){
     :root{ --radius: 18px; }
     body, #app-frame{ overflow-x:hidden; }
@@ -1012,7 +1035,7 @@
   </div>
 
   <!-- PAGE 6: MESSAGE -->
-  <div class="page" data-title="LETTER">
+  <div class="page centered" data-title="LETTER">
     <div class="page-inner">
       <div class="file-tab">FILE 07 / 11 · A LETTER</div>
       <div class="section-head"><span class="eyebrow">A Letter</span><h2>From Captain James</h2><div class="rule"></div></div>
@@ -1100,7 +1123,7 @@
   </div>
 
   <!-- PAGE 10: CLASSIFIED LOCATION REVEALED -->
-  <div class="page" data-title="LOCATION">
+  <div class="page centered" data-title="LOCATION">
     <div class="page-inner">
       <div class="file-tab">FILE 11 / 11 · CLASSIFIED FILE UNLOCKED</div>
       <div class="unlock-wrap">
