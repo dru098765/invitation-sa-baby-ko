@@ -12,7 +12,6 @@
 <body>
 
 <audio id="bg-music" src="golden_hour.mp3" loop preload="auto"></audio>
-<button id="music-toggle" aria-label="Mute background music" title="Mute background music">🔊</button>
 
 <div id="app-frame">
 
@@ -421,27 +420,37 @@
 </div><!-- /#app-frame -->
 
 <script>
-/* ================= BACKGROUND MUSIC ================= */
+/* ================= BACKGROUND MUSIC =================
+   True silent-to-sound autoplay on page load is blocked by every
+   major mobile browser (iOS Safari, Chrome for Android, Samsung
+   Internet) unless it happens inside a real user gesture. There is
+   no reliable workaround for that — so instead we start playback on
+   the very first gesture the person makes on the page, whichever one
+   happens first: opening the envelope, tapping "Open Mission File",
+   or (as a catch-all) the first tap/click/keypress anywhere.
+
+   `musicStarted` and `musicStartPromise` together make this callable
+   from multiple places safely: no duplicate playback, no overlapping
+   play() calls, and no "play() request was interrupted" console
+   warnings if two triggers fire in quick succession. */
 const bgMusic = document.getElementById('bg-music');
-const musicToggle = document.getElementById('music-toggle');
 bgMusic.volume = 0.55;
 let musicStarted = false;
+let musicStartPromise = null;
 function startMusic(){
-  if(musicStarted) return;
-  const p = bgMusic.play();
-  if(p && typeof p.then === 'function'){
-    p.then(()=>{ musicStarted = true; }).catch(()=>{ /* blocked; will retry on next tap */ });
+  if(musicStarted || musicStartPromise) return;
+  musicStartPromise = bgMusic.play();
+  if(musicStartPromise && typeof musicStartPromise.then === 'function'){
+    musicStartPromise
+      .then(()=>{ musicStarted = true; musicStartPromise = null; })
+      .catch(()=>{ musicStartPromise = null; }); /* no gesture yet; next trigger retries */
   } else {
     musicStarted = true;
+    musicStartPromise = null;
   }
 }
-musicToggle.addEventListener('click', ()=>{
-  if(!musicStarted){ startMusic(); }
-  bgMusic.muted = !bgMusic.muted;
-  musicToggle.textContent = bgMusic.muted ? '🔇' : '🔊';
-});
-/* Try to start on the very first tap anywhere on the page, in addition
-   to the specific intro/envelope handlers below, as a safety net. */
+/* Catch-all safety net: fires on literally the first interaction of
+   any kind, in case someone lands on a step that isn't wired below. */
 document.addEventListener('pointerdown', startMusic, { once:true });
 document.addEventListener('keydown', startMusic, { once:true });
 
@@ -449,6 +458,7 @@ document.addEventListener('keydown', startMusic, { once:true });
 function openEnvelope(){
   const env = document.getElementById('envelope');
   if(env.classList.contains('open')) return;
+  startMusic();
   env.classList.add('open');
   spawnEnvParticles();
   document.getElementById('tap-hint').style.opacity = '0';
@@ -480,6 +490,7 @@ function spawnEnvParticles(){
   }
 }
 function enterDeck(){
+  startMusic();
   document.getElementById('envelope-screen').classList.add('hidden');
   document.getElementById('progress-wrap').classList.add('show');
   goToPage(0, true);
@@ -493,11 +504,13 @@ function showIntroSlide(n){
 }
 document.querySelectorAll('.intro-continue').forEach(btn=>{
   btn.addEventListener('click', ()=>{
+    startMusic();
     const next = Number(btn.dataset.next);
     if(next) showIntroSlide(next);
   });
 });
 document.getElementById('open-classified-btn').addEventListener('click', ()=>{
+  startMusic();
   document.getElementById('intro-screen').classList.add('hidden');
 });
 let scanPlayed = false;
