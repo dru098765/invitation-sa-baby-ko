@@ -286,15 +286,13 @@
               </div>
             </div>
             <div class="flip-back">
-              <h4>One Date With Captain James</h4>
-              <div class="eyebrow" style="display:block;margin-bottom:0.5rem;">BONUS REWARDS INCLUDE</div>
+              <h4>Reward Unlocked</h4>
+              <div class="eyebrow" style="display:block;margin-bottom:0.5rem;">CLASSIFIED CONTENTS</div>
               <ul>
-                <li>Food</li>
-                <li>Quality time</li>
-                <li>Unlimited conversations</li>
-                <li>Random jokes</li>
-                <li>Free Captain James commentary</li>
-                <li>New memories unlocked</li>
+                <li>🎁 Quality Time</li>
+                <li>🍽️ Food</li>
+                <li>📸 New Memories</li>
+                <li>❤️ One Happy Captain James</li>
               </ul>
             </div>
           </div>
@@ -332,6 +330,12 @@
           <h1 class="celebration-title">Mission Complete</h1>
           <p class="celebration-sub">Agent Spidey Baby has successfully completed all requirements.</p>
           <div class="celebration-status">Captain James Happiness Level: <strong>MAXIMUM</strong></div>
+          <div class="mission-stamp-wrap">
+            <div class="mission-stamp">
+              <span class="stamp-top">Case File #001</span>
+              <span class="stamp-main">Mission Complete</span>
+            </div>
+          </div>
           <div class="final-buttons">
             <button class="btn btn-primary" onclick="revealLocation()">REVEAL CLASSIFIED LOCATION</button>
           </div>
@@ -342,7 +346,16 @@
 
   <!-- PAGE 9: CLASSIFIED LOCATION REVEALED (LOCKS NEXT PAGE UNTIL OPEN FINAL FILE CLICKED) -->
   <div class="page centered" data-title="LOCATION">
-    <div class="page-inner">
+    <div class="page-inner has-decrypt">
+
+      <div class="decrypt-overlay" id="decrypt-overlay">
+        <div class="decrypt-box">
+          <div class="decrypt-line">Decrypting coordinates...</div>
+          <div class="decrypt-bar"><div class="decrypt-fill" id="decrypt-fill"></div></div>
+          <div class="decrypt-status" id="decrypt-status">Please stand by</div>
+        </div>
+      </div>
+
       <div class="file-tab">FILE 10 / 11 · CLASSIFIED FILE UNLOCKED</div>
       <div class="unlock-wrap">
         <div class="unlock-banner"><span class="unlock-icon" aria-hidden="true">🔓</span><span>Classified File Unlocked</span></div>
@@ -360,9 +373,13 @@
         </div>
       </div>
 
-      <div class="location-message-card">
-        <div class="location-message-title">A Note</div>
-        <div class="location-message-body">Text here or message here</div>
+      <div class="location-info-card">
+        <div class="location-declass-note">After successful mission completion, the destination has been declassified.</div>
+        <div class="location-info-grid">
+          <div class="location-info-row emphasis"><h4>📍 Location</h4><p>[Restaurant / Venue Name]</p></div>
+          <div class="location-info-row"><h4>🗓️ Date</h4><p>[Date]</p></div>
+          <div class="location-info-row"><h4>⏰ Time</h4><p>[Time]</p></div>
+        </div>
       </div>
 
       <div class="final-buttons">
@@ -377,10 +394,16 @@
       <div class="file-tab">FILE 11 / 11 · FINAL MESSAGE</div>
       <div class="section-head"><span class="eyebrow">Final File</span><h2>Message From Captain James</h2><div class="rule"></div></div>
       <div class="note-card">
-        <p>Text here or message here</p>
+        <p>hello, spidey baby.</p>
+        <p>i know normal people would probably just send a message and ask someone out. but you're not something i wanted to do the normal way.</p>
+        <p>so instead you got a whole classified file, a fake investigation, and probably way more evidence exhibits than any one person deserves. that's just what happens when someone means this much to me.</p>
+        <p>every part of this "mission" was made up, except the parts about you. the smile, the way you make ordinary days feel lighter, the way i keep thinking about you at completely inconvenient times — all real, no clearance required.</p>
+        <p>so thank you for reading all the way to file eleven. thank you for putting up with captain james and his very dramatic ideas. and thank you, most of all, for being exactly the kind of person worth building something like this for.</p>
+        <p>i can't wait for our actual mission — just us, no code names required.</p>
+        <div class="sign">— Captain James ❤️</div>
       </div>
-      <div class="final-buttons">
-        <button class="btn btn-primary" onclick="openModal('love-note')">OPEN LITTLE NOTE ❤️</button>
+      <div class="addendum-wrap">
+        <button class="addendum-btn" onclick="openModal('love-note')">❤️ Open Confidential Addendum</button>
       </div>
     </div>
   </div>
@@ -424,11 +447,24 @@
 
 <div class="modal-overlay" id="modal-love-note" role="dialog" aria-modal="true" aria-labelledby="modal-love-note-title">
   <div class="modal-box">
-    <span class="secret-lock">🔓 Little Note</span>
-    <span class="eyebrow">One More Thing</span>
-    <h3 id="modal-love-note-title">A Little Note</h3>
-    <p>I love you so much my baby! ❤️<br>I hope you enjoy this HEHEHEHEHE 😘<br>Mwa! ❤️</p>
+    <span class="secret-lock">🔓 Addendum Unlocked</span>
+    <span class="eyebrow">Confidential Addendum</span>
+    <h3 id="modal-love-note-title">One More Thing</h3>
+    <p>I love you so much my baby ❤️<br>I hope you enjoyed this little mission.<br>Thank you for always making my days better.<br>HEHEHEHEHE 😘<br>Mwa ❤️</p>
     <button class="modal-close" onclick="closeModal('modal-love-note');">Close File</button>
+  </div>
+</div>
+
+<!-- ============ END OF FILE SCREEN ============ -->
+<div id="end-screen" aria-hidden="true">
+  <div class="end-screen-inner">
+    <span class="end-screen-tag">Mission Archive · Sealed</span>
+    <h1 class="end-screen-title">End of File</h1>
+    <div class="fromfor">
+      <div><div class="lbl">FROM</div><div class="name">Captain James 🛡️</div></div>
+      <div><div class="lbl">FOR</div><div class="name">Agent Spidey Baby 🕷️</div></div>
+    </div>
+    <div class="end-screen-case">Case Closed.</div>
   </div>
 </div>
 
@@ -575,6 +611,9 @@ const finalIndex = pages.findIndex(p => p.dataset.title === 'FINAL');
 const acceptedIndex = pages.findIndex(p => p.dataset.title === 'ACCEPTED');
 const locationIndex = pages.findIndex(p => p.dataset.title === 'LOCATION');
 const messageIndex = pages.findIndex(p => p.dataset.title === 'MESSAGE');
+/* Pages where the next arrow must be fully hidden (not just disabled)
+   until the page's required action has been completed. */
+const gatedIndices = [finalIndex, acceptedIndex, locationIndex];
 let maxUnlockedIndex = finalIndex;
 
 pages.forEach((p,i)=>{
@@ -615,7 +654,18 @@ function updateNav(){
   });
   navLabel.textContent = pages[current].dataset.title;
   prevBtn.disabled = current === 0;
-  nextBtn.disabled = current === pages.length - 1 || current >= maxUnlockedIndex;
+
+  /* Next arrow: on gated checkpoint pages that haven't been resolved
+     yet, hide the arrow completely rather than just disabling it —
+     progression on those pages must come from the page's own button. */
+  const onUnresolvedGate = gatedIndices.includes(current) && current >= maxUnlockedIndex;
+  if(onUnresolvedGate){
+    nextBtn.style.display = 'none';
+  } else {
+    nextBtn.style.display = '';
+    nextBtn.disabled = current === pages.length - 1 || current >= maxUnlockedIndex;
+  }
+
   refreshLockState();
   const activeDot = document.querySelectorAll('.nav-dot')[current];
   if(activeDot){
@@ -670,6 +720,7 @@ function goToPage(i, instant){
   playPageEnter(pages[current]);
   if(pages[current].dataset.title === 'BRIEFING'){ typewriterBriefing(); }
   if(pages[current].dataset.title === 'ACCEPTED'){ playAcceptedEffects(); }
+  if(pages[current].dataset.title === 'LOCATION'){ playLocationDecrypt(); }
 }
 function playPageEnter(page){
   const inner = page.querySelector('.page-inner');
@@ -825,6 +876,11 @@ function openModal(which){ openOverlay('modal-' + which); }
 function closeModal(id){
   document.getElementById(id).classList.remove('show');
   if(lastFocusedEl){ lastFocusedEl.focus(); lastFocusedEl = null; }
+  /* Closing the Confidential Addendum popup is the true end of the
+     experience — after it closes, roll credits on the whole mission. */
+  if(id === 'modal-love-note'){
+    setTimeout(()=>{ document.getElementById('end-screen').classList.add('show'); }, 400);
+  }
 }
 document.querySelectorAll('.modal-overlay').forEach(m=>{
   m.addEventListener('click', (e)=>{ if(e.target === m) closeModal(m.id); });
@@ -885,6 +941,30 @@ function launchConfetti(wrapId){
     s.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
     wrap.appendChild(s);
   }
+}
+
+/* ================= LOCATION DECRYPT SEQUENCE ================= */
+let locationDecrypted = false;
+function playLocationDecrypt(){
+  if(locationDecrypted) return;
+  locationDecrypted = true;
+  const overlay = document.getElementById('decrypt-overlay');
+  if(!overlay) return;
+  const fill = document.getElementById('decrypt-fill');
+  const status = document.getElementById('decrypt-status');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){
+    overlay.classList.add('hide');
+    return;
+  }
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{ fill.style.width = '100%'; });
+  });
+  setTimeout(()=>{
+    status.textContent = 'Access Granted';
+    status.classList.add('granted');
+  }, 1250);
+  setTimeout(()=>{ overlay.classList.add('hide'); }, 2050);
 }
 
 /* init nav state */
