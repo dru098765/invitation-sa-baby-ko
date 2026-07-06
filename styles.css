@@ -39,8 +39,10 @@
 
 html, body {
     height: 100%;
+    min-height: 100%;
     overscroll-behavior: none;
     max-width: 100%;
+    overflow-x: hidden;
 }
 
 html {
@@ -52,6 +54,8 @@ body {
     color: var(--cocoa);
     font-family: var(--body);
     overflow: hidden;
+    min-height: 100svh;
+    min-height: 100dvh;
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: transparent;
 }
@@ -121,9 +125,14 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 #app-frame {
     position: relative;
     width: 100%;
-    height: 100dvh;
+    max-width: 100%;
+    min-width: 0;
+    height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
     background: var(--paper);
     overflow: hidden;
+    overscroll-behavior: none;
 }
 
 #bg-particles {
@@ -155,7 +164,9 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
         radial-gradient(circle at 82% 80%, rgba(176,138,78,0.16), transparent 55%),
         var(--paper);
     transition: opacity 0.6s ease, visibility 0.6s ease;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 .intro-slide {
@@ -285,6 +296,9 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
         radial-gradient(circle at 85% 85%, rgba(176,138,78,0.14), transparent 50%),
         var(--paper);
     transition: opacity 0.7s ease, visibility 0.7s ease;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 #envelope-screen.hidden {
@@ -492,7 +506,10 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
     z-index: 5;
     display: flex;
     height: 100%;
+    min-height: 100%;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     transition: transform 0.6s cubic-bezier(.4,0,.2,1);
     will-change: transform;
 }
@@ -500,6 +517,8 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .page {
     flex: 0 0 100%;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     min-height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -514,19 +533,21 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 }
 
 .page-inner {
-    width: 100%;
-    max-width: 1100px;
+    width: min(100%, 1100px);
+    max-width: 100%;
+    min-width: 0;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
 }
 
-.page.centered {
-    justify-content: center;
-}
-
+/* Vertical centering uses auto margins on .page-inner (not justify-content)
+   so that when content is short it centers, and when content is taller
+   than the viewport it gracefully falls back to the top instead of
+   clipping/hiding content above the fold (the "safe centering" pattern). */
 .page.centered .page-inner {
-    margin: auto;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .page-inner.entering {
@@ -536,6 +557,9 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .page-inner > * {
     margin-left: auto;
     margin-right: auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .file-tab {
@@ -902,6 +926,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     width: 100%;
     max-width: 320px;
+    white-space: normal;
 }
 
 .btn-primary {
@@ -962,7 +987,8 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
     border: 1px solid var(--apricot);
     padding: clamp(1.6rem,5vw,2.4rem);
     margin-top: 1.4rem;
-    max-width: 460px;
+    width: min(100%, 460px);
+    max-width: 100%;
     text-align: left;
 }
 
@@ -1024,6 +1050,8 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .location-info-card,
 .location-message-card {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     margin: 0 auto;
     background: var(--white);
     border: 1px solid var(--apricot);
@@ -1169,7 +1197,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 
 .selection-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    grid-template-columns: repeat(auto-fit,minmax(min(100%, 180px),1fr));
     gap: 0.7rem;
     max-width: 540px;
     margin: 0 auto 1.8rem;
@@ -1278,8 +1306,10 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 
 .details-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+    grid-template-columns: repeat(auto-fit,minmax(min(100%, 210px),1fr));
     gap: 0.85rem;
+    width: 100%;
+    min-width: 0;
     max-width: 920px;
     margin: 0 auto;
 }
@@ -1384,6 +1414,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
     border: 1px solid var(--apricot);
     position: relative;
     width: min(100%, 560px);
+    max-width: 100%;
     margin: 0 auto;
 }
 
@@ -1691,7 +1722,7 @@ h1, h2, h3 {
 
 .polaroid-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    grid-template-columns: repeat(auto-fit,minmax(min(100%, 180px),1fr));
     gap: 1rem;
     width: 100%;
     max-width: 900px;
@@ -1704,6 +1735,7 @@ h1, h2, h3 {
 
 .polaroid {
     width: min(100%, 240px);
+    max-width: 100%;
     aspect-ratio: 0.82/1;
     background:
         repeating-linear-gradient(0deg, rgba(140,91,74,0.015) 0px, rgba(140,91,74,0.015) 1px, transparent 1px, transparent 3px),
@@ -1780,7 +1812,7 @@ h1, h2, h3 {
 
 .location-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    grid-template-columns: repeat(auto-fit,minmax(min(100%, 260px),1fr));
     gap: 1rem;
     width: 100%;
     max-width: 900px;
@@ -1922,6 +1954,7 @@ h1, h2, h3 {
     box-shadow: var(--shadow);
     overflow: hidden;
     border: 1px solid var(--apricot);
+    width: 100%;
     max-width: 900px;
     margin: 0 auto;
 }
@@ -2204,12 +2237,6 @@ h1, h2, h3 {
         padding-right: 3rem;
     }
 
-    .page-inner {
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
     .selection-cards {
         max-width: 600px;
         gap: 1rem;
@@ -2266,81 +2293,130 @@ h1, h2, h3 {
     }
 }
 
-@media (max-width:768px) {
-    .location-grid {
-        grid-template-columns: 1fr;
+/* ==========================================================
+   MOBILE (SINGLE CONSOLIDATED SYSTEM)
+   One breakpoint for all phone-width overrides. Fluid units
+   (vw/clamp/min) handle scaling across 320-767px instead of
+   stacking multiple max-width breakpoints against each other.
+========================================================== */
+
+@media (max-width: 767px) {
+
+    body,
+    #app-frame {
+        min-height: 100svh;
+        min-height: 100dvh;
     }
+
+    /* ---- Intro / Envelope ---- */
+
+    #intro-screen,
+    #envelope-screen {
+        align-items: center;
+        justify-content: center;
+        padding: 1rem 0.75rem 1.35rem;
+        overflow-y: auto;
+    }
+
+    .intro-slide {
+        padding: 1.2rem 0.9rem 1.4rem;
+    }
+
+    .envelope-wrap {
+        width: min(86vw, 300px);
+    }
+
+    .env-tag {
+        margin-bottom: 1.1rem;
+    }
+
+    .tap-hint {
+        margin-top: 0.75rem;
+    }
+
+    .enter-cta {
+        margin-top: 1.5rem;
+    }
+
+    /* ---- Page shell (shared by every page, Files 01-11) ---- */
 
     .page {
         padding:
-            calc(var(--topbar-h) + .5rem)
-            1rem
-            calc(var(--nav-h) + 1rem);
+            calc(var(--topbar-h) + 0.5rem)
+            0.85rem
+            calc(var(--nav-h) + 0.85rem);
     }
 
     .page-inner {
-        max-width: 100%;
-    }
-
-    .selection-card,
-    .briefing-card,
-    .note-card,
-    .center-card {
-        padding: 1.2rem;
-    }
-
-    .polaroid-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .polaroid {
-        max-width: 320px;
-    }
-
-    .location-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .flip-card {
-        width: 280px;
-    }
-
-    .btn {
         width: 100%;
-    }
-}
-
-@media (max-width: 360px) {
-    .page {
-        padding-left: 0.65rem;
-        padding-right: 0.65rem;
-        padding-top: calc(var(--topbar-h) + 0.4rem);
-        padding-bottom: calc(var(--nav-h) + 0.7rem);
-    }
-
-    .page-inner {
+        max-width: 100%;
         gap: 0.2rem;
     }
 
     .section-head {
-        margin-bottom: 0.75rem;
+        margin-bottom: 1rem;
     }
 
-    .selection-card, .briefing-card, .note-card, .center-card {
-        padding: 1rem 0.85rem;
+    .section-head h2 {
+        font-size: clamp(1.25rem, 5vw, 1.65rem);
     }
+
+    /* ---- Cards shared across pages ---- */
+
+    .selection-card,
+    .briefing-card,
+    .note-card,
+    .center-card,
+    .location-info-card,
+    .location-message-card,
+    .report-card {
+        padding: 1rem 0.9rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .note-card p {
+        font-size: 0.95rem;
+        line-height: 1.55;
+    }
+
+    /* ---- Files 03-05 grids (Selection / Details / Dossier) ---- */
+
+    .selection-cards,
+    .details-grid,
+    .dossier-body {
+        grid-template-columns: 1fr;
+        gap: 0.7rem;
+    }
+
+    .selection-item,
+    .detail-card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .dossier {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* ---- File 06 Evidence: stays 2 columns on phones ---- */
 
     .polaroid-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.75rem;
+        width: 100%;
     }
 
     .polaroid {
-        width: min(92vw, 280px);
-        padding: 0.5rem 0.5rem 0.85rem;
+        width: 100%;
+        max-width: 100%;
+        padding: 0.6rem 0.6rem 1rem;
     }
 
     .polaroid-cap {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .sticky-note {
@@ -2349,53 +2425,64 @@ h1, h2, h3 {
         font-size: 0.88rem;
     }
 
-    .note-card p {
-        font-size: 0.95rem;
-        line-height: 1.55;
+    /* ---- File 07 Cover statement ---- */
+
+    .statement {
+        padding: 0.8rem 0.2rem;
+        width: min(100%, 560px);
+    }
+
+    .statement h1 {
+        font-size: clamp(1.75rem, 8vw, 2.35rem);
+    }
+
+    .fromfor {
+        gap: 0.95rem;
+        margin-top: 1.4rem;
+    }
+
+    .fromfor .name {
+        font-size: 0.98rem;
+    }
+
+    /* ---- Files 08-11 (Reward / Final / Accepted / Location):
+           same .page / .page-inner shell as Files 01-06, no
+           special layout, only content-specific sizing below ---- */
+
+    .flip-card {
+        width: min(80vw, 280px);
     }
 
     .final-buttons {
         gap: 1rem;
-        margin-top: 1.8rem;
-    }
-
-    .btn {
-        font-size: 0.92rem;
-        padding: 0.8rem 1rem;
-    }
-
-    .flip-card {
-        width: min(88vw, 250px);
-    }
-
-    .celebration-inline-wrap {
-        min-height: min(230px, 46vh);
-        padding-top: 0.2rem;
-    }
-
-    .celebration-title {
-        font-size: clamp(1.6rem, 8vw, 2.05rem);
-    }
-
-    .celebration-sub {
-        font-size: 0.92rem;
+        margin-top: 1.6rem;
     }
 
     .location-grid {
+        grid-template-columns: 1fr;
         gap: 0.75rem;
         width: 100%;
     }
 
     .location-photo {
-        min-height: 130px;
-        padding: 0.85rem;
+        width: 100%;
+        max-width: 100%;
     }
 
-    .location-info-card, .location-message-card {
-        padding: 0.9rem 0.85rem;
-    }
+    /* ---- Shared buttons ---- */
 
-    .enter-cta {
-        margin-top: 2.6rem;
+    .btn,
+    .enter-btn,
+    .modal-close {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Evidence grid only drops to a single column on the very
+   narrowest phones (below 320px). */
+@media (max-width: 319px) {
+    .polaroid-grid {
+        grid-template-columns: 1fr;
     }
 }
