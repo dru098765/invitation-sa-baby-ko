@@ -495,6 +495,7 @@ function startScanSequence(){
 /* ================= PAGE DECK NAVIGATION ================= */
 const pages = Array.from(document.querySelectorAll('.page'));
 const deck = document.getElementById('deck');
+const appFrame = document.getElementById('app-frame');
 const dotsWrap = document.getElementById('nav-dots');
 const navLabel = document.getElementById('nav-label');
 const prevBtn = document.getElementById('prev-btn');
@@ -530,20 +531,52 @@ function updateNav(){
   prevBtn.disabled = current === 0;
   nextBtn.disabled = current === pages.length - 1 || (current === finalIndex && !missionAccepted);
   const activeDot = document.querySelectorAll('.nav-dot')[current];
-  if(activeDot) activeDot.scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+  if(activeDot){
+    /* Scroll ONLY the #nav-dots strip itself (its own overflow-x:auto
+       container). Element.scrollIntoView() is intentionally avoided here:
+       on some engines it walks up the ancestor chain and can also nudge
+       #app-frame's scrollLeft (even though #app-frame is overflow:hidden,
+       that only blocks user/UI scrolling, not programmatic scrollLeft
+       changes). That stray ancestor scroll was shifting the entire
+       absolutely-positioned #deck sideways, revealing a sliver of the
+       next page and breaking centering on Files 07+ once the dot strip
+       needed to scroll. Computing the offset manually guarantees nothing
+       outside #nav-dots ever moves. */
+    const dotsRect = dotsWrap.getBoundingClientRect();
+    const dotRect = activeDot.getBoundingClientRect();
+    const currentOffset = dotRect.left - dotsRect.left + dotsWrap.scrollLeft;
+    const targetScroll = currentOffset - (dotsWrap.clientWidth / 2) + (dotRect.width / 2);
+    const maxScroll = dotsWrap.scrollWidth - dotsWrap.clientWidth;
+    dotsWrap.scrollTo({
+      left: Math.max(0, Math.min(targetScroll, maxScroll)),
+      behavior: 'smooth'
+    });
+  }
+  /* Safety net: guarantee the app shell itself never carries a scroll
+     offset, regardless of what caused it (scrollIntoView chaining,
+     focus() calls, autofill, etc). #app-frame/html/body are meant to be
+     completely static; only #deck's transform should ever move content. */
+  appFrame.scrollLeft = 0;
+  document.documentElement.scrollLeft = 0;
+  document.body.scrollLeft = 0;
 
   const pct = Math.round(((current+1) / pages.length) * 100);
   progressFill.style.width = pct + '%';
   progressPct.textContent = pct + '%';
   progressWrap.setAttribute('aria-valuenow', String(pct));
 }
+function setDeckPosition(targetIndex, instant){
+  const offset = -targetIndex * 100;
+  deck.style.transition = instant ? 'none' : '';
+  deck.style.transform = `translateX(${offset}%)`;
+  if(instant){ void deck.offsetHeight; deck.style.transition = ''; }
+}
+
 function goToPage(i, instant){
   let target = i;
   if(target > finalIndex && !missionAccepted){ target = finalIndex; }
   current = Math.max(0, Math.min(pages.length-1, target));
-  deck.style.transition = instant ? 'none' : '';
-  deck.style.transform = `translateX(-${current*100}%)`;
-  if(instant){ void deck.offsetHeight; deck.style.transition = ''; }
+  setDeckPosition(current, instant);
   pages[current].scrollTop = 0;
   updateNav();
   playPageEnter(pages[current]);
@@ -740,7 +773,17 @@ function launchConfetti(wrapId){
 }
 
 /* init nav state */
+current = 0;
+setDeckPosition(0, true);
 updateNav();
+requestAnimationFrame(() => {
+  setDeckPosition(0, true);
+});
+window.addEventListener('load', () => {
+  requestAnimationFrame(() => {
+    setDeckPosition(0, true);
+  });
+});
 </script>
 </body>
 </html>
