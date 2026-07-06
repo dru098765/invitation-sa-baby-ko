@@ -97,6 +97,21 @@
   <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
 </div>
 
+<!-- ============ DECRYPT OVERLAY (kept outside #deck on purpose — #deck is
+     transformed during page navigation, and a transformed ancestor turns
+     position:fixed children into "fixed to that ancestor" instead of the
+     real viewport. Living here keeps it truly fullscreen and only ever
+     visible while playLocationDecrypt() is running. ============ -->
+<div class="decrypt-overlay" id="decrypt-overlay">
+  <div class="decrypt-box">
+    <div class="decrypt-icon" aria-hidden="true">🔏</div>
+    <div class="decrypt-line" id="decrypt-line">Accessing file...</div>
+    <div class="decrypt-bar"><div class="decrypt-fill" id="decrypt-fill"></div></div>
+    <div class="decrypt-pct" id="decrypt-pct">0%</div>
+    <div class="decrypt-status" id="decrypt-status">Please stand by</div>
+  </div>
+</div>
+
 <!-- ============ PAGE DECK ============ -->
 <div id="deck">
 
@@ -359,16 +374,6 @@
   <!-- PAGE 9: CLASSIFIED LOCATION REVEALED (LOCKS NEXT PAGE UNTIL OPEN FINAL FILE CLICKED) -->
   <div class="page centered" data-title="LOCATION">
     <div class="page-inner has-decrypt">
-
-      <div class="decrypt-overlay" id="decrypt-overlay">
-        <div class="decrypt-box">
-          <div class="decrypt-icon" aria-hidden="true">🔏</div>
-          <div class="decrypt-line" id="decrypt-line">Accessing file...</div>
-          <div class="decrypt-bar"><div class="decrypt-fill" id="decrypt-fill"></div></div>
-          <div class="decrypt-pct" id="decrypt-pct">0%</div>
-          <div class="decrypt-status" id="decrypt-status">Please stand by</div>
-        </div>
-      </div>
 
       <div class="file-tab">FILE 10 / 11 · CLASSIFIED FILE UNLOCKED</div>
       <div class="unlock-wrap">
@@ -991,9 +996,10 @@ function playLocationDecrypt(){
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if(reduced){
-    overlay.classList.add('hide');
     return;
   }
+
+  overlay.classList.add('show');
 
   /* Stage 1: Accessing file... -> 72% */
   requestAnimationFrame(()=>{
@@ -1020,7 +1026,7 @@ function playLocationDecrypt(){
   }, 1900);
 
   /* Reveal the location card */
-  setTimeout(()=>{ overlay.classList.add('hide'); }, 2500);
+  setTimeout(()=>{ overlay.classList.remove('show'); }, 2500);
 }
 function animateCount(el, from, to, duration){
   if(!el) return;
