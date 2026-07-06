@@ -604,7 +604,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
     justify-content: center;
 }
 
-/* ---------- SELECTION REPORT (NEW PAGE) ---------- */
+/* ---------- SELECTION REPORT ---------- */
 
 .selection-wrap {
     display: flex;
@@ -881,6 +881,12 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
     background: var(--rose-deep);
     width: 20px;
     border-radius: 5px;
+}
+
+.nav-dot.locked {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 #nav-label {
@@ -1410,7 +1416,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
     line-height: 1.6;
 }
 
-/* ---------- MESSAGE ---------- */
+/* ---------- MESSAGE / NOTE CARD ---------- */
 
 .note-card {
     background: var(--white);
@@ -1825,8 +1831,6 @@ h1, h2, h3 {
    LOCATION SECTION
 ========================================================== */
 
-/* ---------- MISSION LOCATION (REWARD PAGE) ---------- */
-
 .location-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(min(100%, 260px),1fr));
@@ -1919,7 +1923,7 @@ h1, h2, h3 {
     border: 1px solid var(--apricot);
     max-width: 520px;
     width: 100%;
-    margin: 0 auto;
+    margin: 1rem auto 0;
     padding: 1rem 0.95rem;
     text-align: center;
     position: relative;
@@ -2366,7 +2370,7 @@ h1, h2, h3 {
         margin-top: 1.5rem;
     }
 
-    /* ---- Page shell (shared by every page, Files 01-11) ---- */
+    /* ---- Page shell (shared by every page) ---- */
 
     .page {
         padding:
@@ -2409,7 +2413,7 @@ h1, h2, h3 {
         line-height: 1.55;
     }
 
-    /* ---- Files 03-05 grids (Selection / Details / Dossier) ---- */
+    /* ---- Selection / Details / Dossier grids ---- */
 
     .selection-cards,
     .details-grid,
@@ -2429,7 +2433,7 @@ h1, h2, h3 {
         max-width: 100%;
     }
 
-    /* ---- File 06 Evidence: stays 2 columns on phones ---- */
+    /* ---- Evidence: stays 2 columns on phones ---- */
 
     .polaroid-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2453,7 +2457,7 @@ h1, h2, h3 {
         font-size: 0.88rem;
     }
 
-    /* ---- File 07 Cover statement ---- */
+    /* ---- Cover statement ---- */
 
     .statement {
         padding: 0.8rem 0.2rem;
@@ -2473,9 +2477,9 @@ h1, h2, h3 {
         font-size: 0.98rem;
     }
 
-    /* ---- Files 08-11 (Reward / Final / Accepted / Location):
-           same .page / .page-inner shell as Files 01-06, no
-           special layout, only content-specific sizing below ---- */
+    /* ---- Reward / Final / Accepted / Location / Message:
+           same .page / .page-inner shell, no special layout,
+           only content-specific sizing below ---- */
 
     .flip-card {
         width: min(80vw, 280px);
