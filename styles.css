@@ -2640,14 +2640,12 @@ h1, h2, h3 {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 1.5rem;
-        margin-bottom: 1.5rem;
-        width: 100%;
-        position: sticky;
-        bottom: calc(var(--nav-h) + 0.9rem);
-        z-index: 70;
-        background: rgba(255, 249, 243, 0.95);
-        padding: 0.8rem 0 0;
+        margin: 2rem auto 1.75rem;
+        width: min(100%, 420px);
+        position: static;
+        z-index: auto;
+        background: transparent;
+        padding: 0;
     }
 
     .location-actions .open-finale-btn,
