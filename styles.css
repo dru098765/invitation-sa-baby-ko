@@ -2807,15 +2807,16 @@ h1, h2, h3 {
     align-items: center;
     justify-content: center;
     transition: opacity 0.6s ease, visibility 0.6s ease;
-    opacity: 1;
-    visibility: visible;
-    border-radius: 0;
-}
-
-.decrypt-overlay.hide {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    border-radius: 0;
+}
+
+.decrypt-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .decrypt-box {
