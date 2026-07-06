@@ -326,19 +326,31 @@
         <div class="celebration-inline-hearts" id="accepted-hearts" aria-hidden="true"></div>
         <div class="celebration-inline-confetti confetti" id="accepted-confetti" aria-hidden="true"></div>
         <div class="celebration-inline-content">
-          <span class="eyebrow">Mission Status</span>
-          <h1 class="celebration-title">Mission Complete</h1>
-          <p class="celebration-sub">Agent Spidey Baby has successfully completed all requirements.</p>
-          <div class="celebration-status">Captain James Happiness Level: <strong>MAXIMUM</strong></div>
-          <div class="mission-stamp-wrap">
-            <div class="mission-stamp">
-              <span class="stamp-top">Case File #001</span>
-              <span class="stamp-main">Mission Complete</span>
+
+          <div class="success-card" id="success-card">
+            <span class="success-badge" id="success-badge"><span class="success-badge-icon" aria-hidden="true">✓</span>Success</span>
+
+            <span class="eyebrow">Mission Status</span>
+            <h1 class="celebration-title">Mission Complete</h1>
+
+            <div class="mission-stamp-wrap">
+              <div class="mission-stamp" id="mission-stamp">
+                <span class="stamp-top">Case File #001</span>
+                <span class="stamp-main">Mission Complete</span>
+              </div>
+            </div>
+
+            <p class="celebration-sub">Agent Spidey Baby has successfully completed all mission requirements.</p>
+            <p class="celebration-sub celebration-sub-2">Captain James is pleased to report that the operation was a complete success.</p>
+
+            <div class="celebration-status">Status: <strong>AUTHORIZED FOR LOCATION ACCESS</strong></div>
+
+            <div class="final-buttons">
+              <button class="btn btn-primary btn-glow" onclick="revealLocation()">🔓 REVEAL CLASSIFIED LOCATION</button>
+              <div class="cta-subtitle">Access to destination requires authorization</div>
             </div>
           </div>
-          <div class="final-buttons">
-            <button class="btn btn-primary" onclick="revealLocation()">REVEAL CLASSIFIED LOCATION</button>
-          </div>
+
         </div>
       </div>
     </div>
@@ -350,8 +362,10 @@
 
       <div class="decrypt-overlay" id="decrypt-overlay">
         <div class="decrypt-box">
-          <div class="decrypt-line">Decrypting coordinates...</div>
+          <div class="decrypt-icon" aria-hidden="true">🔏</div>
+          <div class="decrypt-line" id="decrypt-line">Accessing file...</div>
           <div class="decrypt-bar"><div class="decrypt-fill" id="decrypt-fill"></div></div>
+          <div class="decrypt-pct" id="decrypt-pct">0%</div>
           <div class="decrypt-status" id="decrypt-status">Please stand by</div>
         </div>
       </div>
@@ -361,6 +375,15 @@
         <div class="unlock-banner"><span class="unlock-icon" aria-hidden="true">🔓</span><span>Classified File Unlocked</span></div>
       </div>
       <div class="section-head"><span class="eyebrow">Access Granted</span><h2>Classified Location Revealed</h2><div class="rule"></div></div>
+
+      <div class="location-info-card">
+        <div class="location-declass-note">After successful mission completion, the destination has been declassified.</div>
+        <div class="location-info-grid">
+          <div class="location-info-row emphasis"><h4>📍 Location</h4><p>[Restaurant / Venue Name]</p></div>
+          <div class="location-info-row"><h4>🗓️ Date</h4><p>[Date]</p></div>
+          <div class="location-info-row"><h4>⏰ Time</h4><p>[Time]</p></div>
+        </div>
+      </div>
 
       <div class="location-grid">
         <div class="location-photo">
@@ -373,17 +396,8 @@
         </div>
       </div>
 
-      <div class="location-info-card">
-        <div class="location-declass-note">After successful mission completion, the destination has been declassified.</div>
-        <div class="location-info-grid">
-          <div class="location-info-row emphasis"><h4>📍 Location</h4><p>[Restaurant / Venue Name]</p></div>
-          <div class="location-info-row"><h4>🗓️ Date</h4><p>[Date]</p></div>
-          <div class="location-info-row"><h4>⏰ Time</h4><p>[Time]</p></div>
-        </div>
-      </div>
-
       <div class="final-buttons">
-        <button class="btn btn-primary" onclick="openFinalFile()">OPEN FINAL FILE ❤️</button>
+        <button class="btn btn-primary btn-glow" onclick="openFinalFile()">❤️ OPEN FINAL FILE</button>
       </div>
     </div>
   </div>
@@ -926,6 +940,21 @@ function playAcceptedEffects(){
   acceptedPlayed = true;
   spawnFloatingHearts('accepted-hearts', 12);
   launchConfetti('accepted-confetti');
+
+  /* Stamp impact + success badge fade-in. Kept lightweight and
+     respectful of reduced-motion, matching the rest of the deck. */
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const stamp = document.getElementById('mission-stamp');
+  const badge = document.getElementById('success-badge');
+  if(reduced){
+    if(stamp) stamp.classList.add('stamp-in');
+    if(badge) badge.classList.add('show');
+    return;
+  }
+  requestAnimationFrame(()=>{
+    setTimeout(()=>{ if(stamp) stamp.classList.add('stamp-in'); }, 150);
+    setTimeout(()=>{ if(badge) badge.classList.add('show'); }, 650);
+  });
 }
 
 function launchConfetti(wrapId){
@@ -943,7 +972,11 @@ function launchConfetti(wrapId){
   }
 }
 
-/* ================= LOCATION DECRYPT SEQUENCE ================= */
+/* ================= LOCATION DECRYPT SEQUENCE =================
+   Two-stage "classified access" sequence: accessing the file, then
+   decrypting coordinates, then access granted. Elegant dossier feel
+   (serif italic type, gold/rose palette) rather than a hacker/terminal
+   look — no monospace, no green-on-black. Total runtime ~2.3s. */
 let locationDecrypted = false;
 function playLocationDecrypt(){
   if(locationDecrypted) return;
@@ -951,20 +984,53 @@ function playLocationDecrypt(){
   const overlay = document.getElementById('decrypt-overlay');
   if(!overlay) return;
   const fill = document.getElementById('decrypt-fill');
+  const pct = document.getElementById('decrypt-pct');
+  const line = document.getElementById('decrypt-line');
   const status = document.getElementById('decrypt-status');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   if(reduced){
     overlay.classList.add('hide');
     return;
   }
+
+  /* Stage 1: Accessing file... -> 72% */
   requestAnimationFrame(()=>{
-    requestAnimationFrame(()=>{ fill.style.width = '100%'; });
+    requestAnimationFrame(()=>{
+      fill.style.transition = 'width 0.9s cubic-bezier(.4,0,.2,1)';
+      fill.style.width = '72%';
+      animateCount(pct, 0, 72, 900);
+    });
   });
+
+  /* Stage 2: Decrypting coordinates... -> 100% */
   setTimeout(()=>{
+    line.textContent = 'Decrypting coordinates...';
+    fill.style.transition = 'width 0.8s cubic-bezier(.4,0,.2,1)';
+    fill.style.width = '100%';
+    animateCount(pct, 72, 100, 800);
+  }, 1000);
+
+  /* Stage 3: Access granted */
+  setTimeout(()=>{
+    line.textContent = 'Classified location unlocked';
     status.textContent = 'Access Granted';
     status.classList.add('granted');
-  }, 1250);
-  setTimeout(()=>{ overlay.classList.add('hide'); }, 2050);
+  }, 1900);
+
+  /* Reveal the location card */
+  setTimeout(()=>{ overlay.classList.add('hide'); }, 2500);
+}
+function animateCount(el, from, to, duration){
+  if(!el) return;
+  const start = performance.now();
+  function step(now){
+    const t = Math.min(1, (now - start) / duration);
+    const val = Math.round(from + (to - from) * t);
+    el.textContent = val + '%';
+    if(t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 
 /* init nav state */
