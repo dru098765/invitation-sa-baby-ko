@@ -638,6 +638,14 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
     overflow: hidden;
 }
 
+.message-confetti-anchor {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 5;
+}
+
 .celebration-inline-content {
     position: relative;
     z-index: 2;
@@ -680,6 +688,10 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 
 .unlock-banner .unlock-icon {
     font-size: 0.95rem;
+    width: 0.95rem;
+    height: 0.95rem;
+    display: inline-flex;
+    color: var(--white);
 }
 
 .unlock-wrap {
@@ -1390,8 +1402,11 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 
 .detail-card .icon {
     font-size: 1.3rem;
+    width: 1.3rem;
+    height: 1.3rem;
     margin-bottom: 0.45rem;
     display: inline-block;
+    color: var(--gold-deep);
 }
 
 .detail-card h3 {
@@ -1833,7 +1848,35 @@ h1, h2, h3 {
     gap: 0.3rem;
     margin-bottom: 0.8rem;
     overflow: hidden;
-    box-shadow: inset 0 2px 6px rgba(140,91,74,0.08);
+    position: relative;
+    box-shadow: inset 0 2px 6px rgba(140,91,74,0.08), inset 0 0 22px rgba(60,42,28,0.10);
+}
+
+/* Warm print-toned wash sitting above the photo but below the grain,
+   giving it a gentle "held under warm light" quality rather than a
+   flat digital scan. */
+.polaroid-photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(255,245,230,0.08), rgba(255,235,210,0.08));
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Faint film-grain texture layered on top, so the photo reads as a
+   printed keepsake rather than a flat digital image. Kept subtle and
+   purely decorative — no layout impact, no interaction. */
+.polaroid-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.12;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 140px 140px;
 }
 
 .polaroid-photo img {
@@ -1842,10 +1885,19 @@ h1, h2, h3 {
     object-fit: cover;
     object-position: center;
     display: block;
+    /* Warm, soft, clearly-printed treatment: visible warmth and a hint
+       of grain instead of a flat digital look, without tipping into
+       heavy sepia, orange tones, or a dark vintage filter. */
+    filter: brightness(1.08) contrast(0.88) saturate(0.82) sepia(0.14);
+    transform: scale(1.02);
 }
 
 .polaroid-photo .icon {
     font-size: 1.4rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    color: var(--gold-text);
+    opacity: 0.75;
 }
 
 .polaroid-photo .label {
@@ -1945,6 +1997,8 @@ h1, h2, h3 {
 
 .location-photo .icon {
     font-size: 1.9rem;
+    width: 1.9rem;
+    height: 1.9rem;
     opacity: 0.8;
     color: var(--rose-deep);
 }
@@ -1955,6 +2009,49 @@ h1, h2, h3 {
     text-transform: uppercase;
     color: var(--gold-text);
     font-weight: 800;
+}
+
+/* Each location option (name, photo, date/time) as one self-contained
+   card. Sits directly inside .location-grid alongside .location-or,
+   so it inherits the existing mobile-stack / desktop-row behavior
+   without any breakpoint-specific rules of its own. */
+.location-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    width: 100%;
+    text-align: center;
+}
+
+.location-choice-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--rose-deep);
+}
+
+.location-choice-name {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--cocoa);
+    line-height: 1.3;
+}
+
+.location-choice-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-top: 0.1rem;
+}
+
+.location-choice-date,
+.location-choice-time {
+    font-size: 0.82rem;
+    color: var(--cocoa-soft);
+    font-weight: 600;
 }
 
 .location-info-card {
@@ -2866,7 +2963,10 @@ h1, h2, h3 {
 
 .decrypt-icon {
     font-size: 1.6rem;
-    margin-bottom: 0.7rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin: 0 auto 0.7rem;
+    color: var(--gold-deep);
     opacity: 0.85;
 }
 
@@ -2950,6 +3050,47 @@ h1, h2, h3 {
 }
 
 /* ==========================================================
+   NEW: OPEN FINAL FILE — small, romantic "letter seal" button.
+   Deliberately NOT a large CTA: same quiet footprint on every
+   breakpoint, like discovering a secret note rather than being
+   pushed toward it. Self-contained class, so it doesn't inherit
+   any .btn / .btn-primary / .btn-glow sizing or animation.
+========================================================== */
+
+.finale-seal-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.92rem;
+    letter-spacing: 0.01em;
+    color: var(--rose-deep);
+    background: var(--apricot-soft);
+    border: 1.5px solid var(--gold-soft);
+    border-radius: 999px;
+    padding: 0.7rem 1.8rem;
+    box-shadow: var(--shadow-soft);
+    cursor: pointer;
+    width: auto;
+    max-width: min(240px, 90%);
+    margin: 0 auto;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.finale-seal-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--shadow);
+    background: var(--apricot);
+}
+
+.finale-seal-btn:active {
+    transform: scale(0.97);
+}
+
+/* ==========================================================
    NEW: END OF FILE SCREEN
 ========================================================== */
 
@@ -3018,4 +3159,407 @@ h1, h2, h3 {
         width: 100%;
         max-width: 100%;
     }
+}
+
+/* ==========================================================
+   DESKTOP DECORATIVE CLASSIFIED EDGE LABELS
+   Purely decorative, non-interactive filler for the empty side
+   margins on large screens. Hidden entirely below 1024px so it
+   never competes with or crowds the mobile experience.
+========================================================== */
+
+#desktop-deco {
+    display: none;
+}
+
+@media (min-width: 1025px) {
+    #desktop-deco {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .deco-label {
+        position: absolute;
+        font-family: var(--body);
+        font-weight: 800;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+        color: var(--cocoa);
+        opacity: 0.07;
+        white-space: nowrap;
+        user-select: none;
+    }
+
+    .deco-tl { top: 2.4rem; left: 2.4rem; }
+    .deco-tr { top: 2.4rem; right: 2.4rem; }
+    .deco-bl { bottom: 2.4rem; left: 2.4rem; }
+    .deco-br { bottom: 2.4rem; right: 2.4rem; }
+    .deco-ml {
+        top: 50%;
+        left: 1.6rem;
+        transform: translateY(-50%) rotate(-90deg);
+        transform-origin: left center;
+    }
+    .deco-mr {
+        top: 50%;
+        right: 1.6rem;
+        transform: translateY(-50%) rotate(90deg);
+        transform-origin: right center;
+    }
+}
+
+@media (min-width: 1400px) {
+    .deco-label {
+        font-size: 0.8rem;
+    }
+    .deco-tl, .deco-tr, .deco-bl, .deco-br { opacity: 0.08; }
+}
+
+/* ==========================================================
+   POLAROID TAPE + REALISTIC ROTATION
+   Adds a premium, slightly-imperfect scrapbook feel to the
+   evidence board without touching layout, sizing, or content.
+========================================================== */
+
+.polaroid {
+    transform: rotate(-2deg);
+}
+
+.polaroid:nth-child(2) { transform: rotate(1.5deg); }
+.polaroid:nth-child(3) { transform: rotate(-1deg); }
+.polaroid:nth-child(4) { transform: rotate(2deg); }
+
+.polaroid:hover, .polaroid:focus-within {
+    transform: translateY(-3px) rotate(0deg);
+}
+
+.polaroid::before {
+    content: '';
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+    width: 46px;
+    height: 18px;
+    background: rgba(216, 189, 140, 0.55);
+    box-shadow: 0 2px 4px rgba(140,91,74,0.15);
+    z-index: 3;
+}
+
+/* ---------- Flip-card placeholder SVG icon (replaces mixed emoji) ---------- */
+.ph-icon-svg {
+    width: 2.1rem;
+    height: 2.1rem;
+    color: var(--gold-soft);
+    margin: 0 auto 0.3rem;
+}
+
+/* ==========================================================
+   DESKTOP-ONLY (>=1024px): MISSION DETAILS + EVIDENCE BOARD
+   Everything below only applies at 1024px and up. Nothing here
+   touches the mobile (<=767px) or tablet (768-1023px) rules
+   defined earlier in this file — those remain exactly as-is.
+========================================================== */
+@media (min-width: 1024px) {
+
+    /* ---- Mission Details: balanced 3-column x 2-row grid ---- */
+    .details-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+        max-width: 960px;
+    }
+
+    /* ---- Evidence Collected: clean, centered 2x2 board ----
+       No connector pin, no connecting strings — the "board" feel
+       now comes purely from spacing, alignment and shadow instead
+       of detective-style thread graphics. */
+    .evidence-strings {
+        display: none;
+    }
+
+    .evidence-board {
+        gap: 1.6rem;
+    }
+
+    .polaroid-grid {
+        grid-template-columns: repeat(2, 260px);
+        justify-content: center;
+        width: auto;
+        max-width: none;
+        gap: 2.4rem 3rem;
+    }
+
+    .polaroid {
+        width: 100%;
+        transform: none;
+        box-shadow: 0 16px 32px -18px rgba(140,91,74,0.32);
+    }
+
+    .polaroid:nth-child(1),
+    .polaroid:nth-child(2),
+    .polaroid:nth-child(3),
+    .polaroid:nth-child(4) {
+        transform: none;
+    }
+
+    .polaroid:hover,
+    .polaroid:focus-within {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 38px -18px rgba(140,91,74,0.4);
+    }
+
+    .sticky-note {
+        margin-top: 0.3rem;
+    }
+}
+
+/* ==========================================================
+   BELOW DESKTOP (<=1023px) — explicit defaults for the new
+   elements added in this pass, so mobile and tablet render
+   exactly as they did before (mutually exclusive with the
+   min-width:1024px rules below, so cascade order can't cause
+   the two to fight over the same element).
+========================================================== */
+@media (max-width: 1023px) {
+    .photo-index {
+        display: none;
+    }
+
+    .open-finale-btn .btn-label-desktop {
+        display: none;
+    }
+
+    .open-finale-btn .btn-label-default {
+        display: inline;
+    }
+}
+
+/* ==========================================================
+   DESKTOP-ONLY (>=1024px), PART 2:
+   Mission Details polish, Notebook-style Final Letter,
+   Open Final File button, and general desktop balance.
+   Nothing here touches mobile (<=767px) or tablet (768-1023px).
+========================================================== */
+@media (min-width: 1024px) {
+
+    /* ---------------------------------------------------------
+       MISSION DETAILS (File 04) — tighter, more premium 3x2 grid
+       so the cards read as one intentional block instead of
+       floating in a wide container.
+    --------------------------------------------------------- */
+    .details-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 880px;
+        gap: 1.4rem;
+    }
+
+    .detail-card {
+        padding: 1.7rem 1.6rem;
+        border-radius: 20px;
+    }
+
+    .detail-card:hover, .detail-card:focus-within {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow);
+    }
+
+    /* ---------------------------------------------------------
+       EVIDENCE COLLECTED (File 06) — extra breathing room so the
+       clean 2x2 board reads as elegant rather than sparse. The
+       dark "Exhibit A/B/C/D" badges are removed entirely (no
+       replacement badge) in favor of a small, quiet caption
+       under each photo, set in the same typography as the rest
+       of the file (matches .file-tab).
+    --------------------------------------------------------- */
+    .evidence-board {
+        gap: 2rem;
+    }
+
+    .evidence-tag {
+        display: none;
+    }
+
+    .photo-index {
+        display: block;
+        font-size: 0.66rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--cocoa-soft);
+        font-weight: 700;
+        text-align: center;
+        margin-top: 0.55rem;
+        opacity: 0.85;
+    }
+
+    /* ---------------------------------------------------------
+       LOCATION PAGE — a touch more presence for the decrypt
+       sequence on large screens (overlay itself already covers
+       the full viewport, including nav chrome, via position:fixed
+       + solid background — this only refines proportions).
+    --------------------------------------------------------- */
+    .decrypt-box {
+        width: min(100%, 380px);
+        padding: 1.4rem;
+    }
+
+    .decrypt-icon {
+        font-size: 1.9rem;
+        width: 1.9rem;
+        height: 1.9rem;
+    }
+
+    .decrypt-line {
+        font-size: 1.15rem;
+    }
+
+    .location-info-card,
+    .location-message-card,
+    .selection-card,
+    .briefing-card {
+        max-width: 700px;
+    }
+
+    /* ---------------------------------------------------------
+       FINAL NOTE — notebook-style letter from Captain James.
+       Wider "page", true handwritten-letter proportions, elegant
+       ruled lines, and a soft left margin rule like a keepsake
+       notebook. Height stays fully automatic so any message
+       length expands the card without clipping or compressing.
+    --------------------------------------------------------- */
+    .note-card {
+        width: min(100%, 680px);
+        max-width: 680px;
+        padding: 2.8rem 3.2rem 2.6rem 3.6rem;
+        border-radius: 4px;
+        height: auto;
+        max-height: none;
+        overflow: visible;
+        background-color: var(--white);
+        background-image:
+            radial-gradient(rgba(140,91,74,0.035) 0.6px, transparent 0.6px),
+            repeating-linear-gradient(var(--white), var(--white) 38px, rgba(198,112,123,0.2) 39px);
+        background-size: 3px 3px, 100% 39px;
+        box-shadow: var(--shadow), 0 1px 0 rgba(140,91,74,0.06) inset;
+    }
+
+    /* Soft keepsake-notebook margin rule down the left side. */
+    .note-card::after {
+        content: '';
+        position: absolute;
+        top: 2.2rem;
+        bottom: 2.2rem;
+        left: 2.35rem;
+        width: 1px;
+        background: linear-gradient(180deg, transparent, var(--gold-soft), transparent);
+        opacity: 0.6;
+    }
+
+    /* Long messages simply grow the card taller — no fixed height,
+       no max-height, no clipping, regardless of message length. */
+    .note-card p {
+        font-size: 1.08rem;
+        line-height: 1.9;
+        max-width: none;
+        margin-bottom: 1.15rem;
+    }
+
+    .note-card p:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .note-card .sign {
+        font-size: 1.2rem;
+        margin-top: 1.4rem;
+    }
+
+    /* ---------------------------------------------------------
+       MISSION COMPLETE (File 09) — drop the secondary status
+       pill under the stamp for a cleaner hierarchy: just the
+       stamp and the Reveal Classified Location button remain.
+    --------------------------------------------------------- */
+    .celebration-status {
+        display: none;
+    }
+
+    /* ---------------------------------------------------------
+       OPEN FINAL NOTE BUTTON — a small, soft, romantic pill,
+       like a delicate invitation card rather than a system CTA.
+       Scoped strictly to .open-finale-btn so the Reveal Classified
+       Location button (which shares .btn-glow) is left untouched.
+    --------------------------------------------------------- */
+    .open-finale-btn.btn-glow {
+        width: auto;
+        max-width: none;
+        min-height: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        padding: 0.75rem 2.1rem;
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 600;
+        font-size: 0.98rem;
+        letter-spacing: 0.01em;
+        text-transform: none;
+        border-radius: 999px;
+        background: var(--apricot-soft);
+        color: var(--rose-deep);
+        border: 1px solid var(--gold-soft);
+        box-shadow: var(--shadow-soft);
+        animation: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    .open-finale-btn.btn-glow:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: var(--shadow);
+        background: var(--apricot);
+        animation: none;
+    }
+
+    /* CSS-only label swap: mobile/tablet keep the original label
+       exactly as-is; desktop shows the softer "Open Final Note"
+       wording. No functionality, order, or onclick behavior
+       changes — both spans sit inside the same original button. */
+    .open-finale-btn .btn-label-default {
+        display: none;
+    }
+
+    .open-finale-btn .btn-label-desktop {
+        display: inline;
+    }
+
+    .location-actions {
+        display: flex;
+        justify-content: center;
+    }
+
+    /* ---------------------------------------------------------
+       GENERAL DESKTOP BALANCE — keep every section visually
+       centered with no lopsided empty space on large monitors.
+    --------------------------------------------------------- */
+    .page-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .section-head,
+    .final-wrap,
+    .evidence-board,
+    .reward-wrap {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+/* Reveal Classified Location reuses the finale-seal-btn look, just
+   slightly wider so the longer label sits on one line. */
+.finale-seal-btn.wide {
+    max-width: min(320px, 92%);
+    white-space: normal;
 }
